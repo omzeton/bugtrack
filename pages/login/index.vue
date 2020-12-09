@@ -5,25 +5,57 @@
                 <h2>Register an account</h2>
                 <div class="input-field">
                     <p>Username</p>
-                    <input type="text" />
+                    <input v-model="form.username" type="text" />
                 </div>
                 <div class="input-field">
                     <p>Email</p>
-                    <input type="text" />
+                    <input v-model="form.email" type="text" />
                 </div>
                 <div class="input-field">
                     <p>Password</p>
-                    <input type="text" />
+                    <input v-model="form.password" type="text" />
                 </div>
                 <div class="input-field" style="margin-bottom:24px">
                     <p>Retype password</p>
-                    <input type="text" />
+                    <input v-model="form.retypedPassword" type="text" />
                 </div>
-                <button type="submit">Submit</button>
+                <button @click="submit" type="submit">Submit</button>
             </form>
+            <p :style="loading ? 'display: block;' : 'display: none;'">Loading...</p>
         </div>
     </div>
 </template>
+
+<script lang="ts">
+import { Vue, Component } from "nuxt-property-decorator";
+
+interface Form {
+    username: string;
+    email: string;
+    password: string;
+    retypedPassword: string;
+}
+
+@Component
+export default class Auth extends Vue {
+    form: Form = {
+        username: "",
+        email: "",
+        password: "",
+        retypedPassword: "",
+    };
+    loading: boolean = false;
+    submit(e: Event): void {
+        this.loading = true;
+        e.preventDefault();
+        console.log(this.form);
+        setTimeout(() => {
+            this.loading = false;
+        }, 1000);
+        return;
+    }
+}
+</script>
 
 <style lang="scss">
 .signup-card {
