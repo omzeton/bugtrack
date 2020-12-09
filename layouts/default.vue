@@ -7,12 +7,14 @@
 
 <script lang="ts">
 import Toolbar from "@/components/Toolbar.vue";
+import { Component, Vue } from "nuxt-property-decorator";
 
-export default {
+@Component({
     components: {
         Toolbar,
     },
-};
+})
+export default class Default extends Vue {}
 </script>
 
 <style lang="scss">

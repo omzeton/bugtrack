@@ -23,11 +23,12 @@
     display: inline-flex;
     box-sizing: border-box;
     &__logo {
-        left: 24px;
+        position: absolute;
+        left: 14px;
         top: 0;
         height: 56px;
         img {
-            height: 50px;
+            height: 40px;
         }
     }
     &__nav {
