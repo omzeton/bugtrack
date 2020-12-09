@@ -1,4 +1,17 @@
-$eerie-black: #262626ff;
-$laurel-green: #acbfa4ff;
-$beige: #e2e8ceff;
-$amber-sae-ece: #ff7f11ff;
+$rubik: "Rubik", sans-serif;
+$karla: "Karla", sans-serif;
+
+$orange: #ff7f11;
+$white1: #ffffff;
+$white2: #fbf8f7;
+$white3: #dddddd;
+
+.flex-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex {
+    display: flex;
+}

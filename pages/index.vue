@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2>hello world</h2>
+        <p>hello world</p>
     </div>
 </template>
 
@@ -9,11 +9,3 @@ import Vue from "vue";
 
 export default Vue.extend({});
 </script>
-
-<style lang="scss" scoped>
-.container {
-    h2 {
-        color: $amber-sae-ece;
-    }
-}
-</style>

@@ -21,5 +21,6 @@ module.exports = {
                 functions: "never",
             },
         ],
+        "import/extensions": ["error", "ignorePackages", { vue: "always" }],
     },
 };
