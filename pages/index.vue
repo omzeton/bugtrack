@@ -1,15 +1,15 @@
 <template>
     <div class="homepage">
-        <div class="card">
-            <img class="card__image" src="~/assets/logo.png" alt="Logo" />
-            <p class="card__text">
+        <div class="homepage-card">
+            <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
+            <p class="homepage-card__text">
                 Bugtrack is an awesome app for tracking bugs and assigning developers to fix them. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis nunc ut iaculis
                 consequat. Vivamus faucibus sollicitudin fermentum. Praesent lorem eros, tempor sed sapien eget, eleifend vulputate sem. Sed venenatis, tortor ut feugiat dignissim, arcu odio
                 vestibulum ligula, id viverra dolor ex a eros. Curabitur eleifend, est eget tempus consectetur, ligula tellus pretium libero, lacinia placerat massa lacus at libero. Pellentesque ac mi
                 eget ligula fermentum aliquet. In hac habitasse platea dictumst.
             </p>
-            <div class="card__buttons flex-wrapper">
-                <nuxt-link to="/login" class="card__button flex-wrapper">Start</nuxt-link>
+            <div class="homepage-card__buttons flex-wrapper">
+                <nuxt-link to="/login" class="homepage-card__button flex-wrapper">Start</nuxt-link>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
     position: relative;
 }
 
-.card {
+.homepage-card {
     display: flex;
     align-items: center;
     flex-direction: column;
