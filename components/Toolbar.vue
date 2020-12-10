@@ -1,7 +1,7 @@
 <template>
     <div class="toolbar">
         <a class="toolbar__logo flex-wrapper">
-            <img src="~/assets/logo_orange.png" alt="Logo" />
+            <img src="~/assets/logo.png" alt="Logo" />
         </a>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>
@@ -23,11 +23,12 @@
     display: inline-flex;
     box-sizing: border-box;
     &__logo {
-        left: 24px;
+        position: absolute;
+        left: 14px;
         top: 0;
         height: 56px;
         img {
-            height: 50px;
+            height: 40px;
         }
     }
     &__nav {

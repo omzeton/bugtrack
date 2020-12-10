@@ -1,6 +1,6 @@
 <template>
-    <div class="signup-page">
-        <AuthForm />
+    <div class="registration">
+        <AuthForm :registrationForm="true" />
     </div>
 </template>
 
