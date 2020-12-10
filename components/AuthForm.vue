@@ -94,11 +94,11 @@
                 >
                     Submit
                 </button>
-                <p
-                    class="font-nunito"
-                    :style="loading ? 'display: block;' : 'display: none;'"
-                >
+                <p v-if="loading" class="font-nunito mt-4">
                     Loading...
+                </p>
+                <p v-if="passwordsError" class="font-nunito text-red-400 mt-4">
+                    Passwords do not match
                 </p>
             </form>
         </ValidationObserver>
@@ -137,15 +137,20 @@ export default class Auth extends Vue {
         retypedPassword: "",
     };
     loading: boolean = false;
+    passwordsError: boolean = false;
 
     submit(e: Event): void {
-        this.loading = true;
         e.preventDefault();
-        this.sendRequest(this.form);
-        setTimeout(() => {
-            this.loading = false;
-        }, 1000);
-        return;
+
+        this.passwordsError = false;
+        this.loading = true;
+
+        if (this.form.password === this.form.retypedPassword) {
+            this.sendRequest(this.form);
+            return;
+        }
+        this.passwordsError = true;
+        this.loading = false;
     }
 }
 </script>
