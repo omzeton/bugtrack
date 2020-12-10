@@ -1,7 +1,7 @@
 <template>
     <div class="toolbar">
         <a class="toolbar__logo flex-wrapper">
-            <img src="~/assets/logo_orange.png" alt="Logo" />
+            <img src="~/assets/logo.png" alt="Logo" />
         </a>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>

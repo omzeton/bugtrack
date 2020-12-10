@@ -2,14 +2,9 @@
     <div class="homepage">
         <div class="homepage-card">
             <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
-            <p class="homepage-card__text">
-                Bugtrack is an awesome app for tracking bugs and assigning developers to fix them. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis nunc ut iaculis
-                consequat. Vivamus faucibus sollicitudin fermentum. Praesent lorem eros, tempor sed sapien eget, eleifend vulputate sem. Sed venenatis, tortor ut feugiat dignissim, arcu odio
-                vestibulum ligula, id viverra dolor ex a eros. Curabitur eleifend, est eget tempus consectetur, ligula tellus pretium libero, lacinia placerat massa lacus at libero. Pellentesque ac mi
-                eget ligula fermentum aliquet. In hac habitasse platea dictumst.
-            </p>
             <div class="homepage-card__buttons flex-wrapper">
-                <nuxt-link to="/login" class="homepage-card__button flex-wrapper">Start</nuxt-link>
+                <nuxt-link to="/login" class="homepage-card__button flex-wrapper">Login</nuxt-link>
+                <nuxt-link to="/register" class="homepage-card__button flex-wrapper">Register</nuxt-link>
             </div>
         </div>
     </div>
@@ -36,7 +31,7 @@
     padding: 32px;
     box-sizing: border-box;
     border-radius: 8px;
-    box-shadow: 0px 0px 23px -1px rgba(255, 127, 17, 0.1);
+    box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.1);
 
     &__image {
         width: 100%;

@@ -16,9 +16,7 @@ export default class Api extends VuexModule {
     @Action({ rawError: true })
     public async sendRequest(data: Payload) {
         try {
-            console.log(data);
             const response = await axios.get("http://localhost:3000/");
-            console.log({ response });
         } catch (error) {
             throw error;
         }
