@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "nuxt-property-decorator";
+import { Vue, Component, namespace } from "nuxt-property-decorator";
+const api = namespace("api");
 
 interface Form {
     username: string;
@@ -38,6 +39,8 @@ interface Form {
 
 @Component
 export default class Auth extends Vue {
+    @api.Action
+    public sendRequest!: (data: Form) => void;
     form: Form = {
         username: "",
         email: "",
@@ -48,7 +51,7 @@ export default class Auth extends Vue {
     submit(e: Event): void {
         this.loading = true;
         e.preventDefault();
-        console.log(this.form);
+        this.sendRequest(this.form);
         setTimeout(() => {
             this.loading = false;
         }, 1000);
