@@ -2,7 +2,14 @@ export default {
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
         title: "Track the bugs! - BugTracker: Tool for devs and not only!",
-        meta: [{ charset: "utf-8" }, { name: "viewport", content: "width=device-width, initial-scale=1" }, { hid: "description", name: "description", content: "" }],
+        meta: [
+            { charset: "utf-8" },
+            {
+                name: "viewport",
+                content: "width=device-width, initial-scale=1",
+            },
+            { hid: "description", name: "description", content: "" },
+        ],
         link: [
             {
                 rel: "icon",
@@ -15,11 +22,13 @@ export default {
             },
             {
                 rel: "stylesheet",
-                href: "https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap",
+                href:
+                    "https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap",
             },
             {
                 rel: "stylesheet",
-                href: "https://fonts.googleapis.com/css2?family=Karla:wght@200&display=swap",
+                href:
+                    "https://fonts.googleapis.com/css2?family=Karla:wght@200&display=swap",
             },
         ],
     },
@@ -37,6 +46,7 @@ export default {
     buildModules: [
         // https://go.nuxtjs.dev/typescript
         "@nuxt/typescript-build",
+        "@nuxtjs/tailwindcss",
     ],
 
     // Modules (https://go.nuxtjs.dev/config-modules)
