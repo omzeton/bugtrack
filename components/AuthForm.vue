@@ -90,7 +90,7 @@
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
-import { Form, RegistrationForm, LoginForm } from "../models/models";
+import { RegistrationForm, LoginForm, HTMLForm } from "../models/models";
 
 const api = namespace("api");
 
@@ -108,7 +108,7 @@ export default class Auth extends Vue {
     public REGISTER_USER!: (data: RegistrationForm) => void;
     public LOGIN_USER!: (data: LoginForm) => void;
 
-    form: Form = {
+    form: HTMLForm = {
         username: "",
         email: "",
         password: "",

@@ -1,16 +1,6 @@
 import { Module, VuexModule, Action } from "vuex-module-decorators";
+import { RegistrationForm, LoginForm } from "../models/models";
 import axios from "axios";
-
-interface RegistrationForm {
-    username: string;
-    email: string;
-    password: string;
-}
-
-interface LoginForm {
-    email: string;
-    password: string;
-}
 
 @Module({
     stateFactory: true,

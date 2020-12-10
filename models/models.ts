@@ -1,10 +1,3 @@
-interface Form {
-    username: string;
-    email: string;
-    password: string;
-    retypedPassword: string;
-}
-
 interface RegistrationForm {
     username: string;
     email: string;
@@ -16,4 +9,11 @@ interface LoginForm {
     password: string;
 }
 
-export { Form, RegistrationForm, LoginForm };
+interface HTMLForm {
+    username: string;
+    email: string;
+    password: string;
+    retypedPassword: string;
+}
+
+export { HTMLForm, RegistrationForm, LoginForm };
