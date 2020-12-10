@@ -26,7 +26,8 @@ import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
 
 import { Character } from "~/apollo/schemas";
-import gqlGetCharacters from "~/apollo/queries/getCharacters.gql";
+
+const gqlGetCharacters = require("~/apollo/queries/getCharacters.gql");
 
 @Component
 export default class IndexPage extends Vue {
