@@ -1,10 +1,24 @@
 <template>
     <div class="homepage">
         <div class="homepage-card">
-            <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
-            <div class="homepage-card__buttons flex-wrapper">
-                <nuxt-link to="/login" class="homepage-card__button flex-wrapper">Login</nuxt-link>
-                <nuxt-link to="/register" class="homepage-card__button flex-wrapper">Register</nuxt-link>
+            <img
+                class="homepage-card__image"
+                src="~/assets/logo.png"
+                alt="Logo"
+            />
+            <div class="flex">
+                <nuxt-link
+                    to="/login"
+                    class="font-roboto mx-8 signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
+                >
+                    Login
+                </nuxt-link>
+                <nuxt-link
+                    to="/register"
+                    class="font-roboto mx-8 signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
+                >
+                    Register
+                </nuxt-link>
             </div>
         </div>
     </div>
