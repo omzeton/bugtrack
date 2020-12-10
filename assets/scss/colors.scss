@@ -7,12 +7,6 @@ $white1: #ffffff;
 $white2: #fbf8f7;
 $white3: #dddddd;
 
-.flex-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flex {
-    display: flex;
+.border-box {
+    box-sizing: border-box;
 }

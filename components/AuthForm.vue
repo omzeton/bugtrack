@@ -1,28 +1,60 @@
 <template>
-    <div class="signup-card">
-        <form action="">
-            <h2>
+    <div class="signup-card rounded">
+        <form class="bg-white p-8" action="">
+            <h2 class="text-center text-lg font-bold pt-8">
                 {{ registrationForm ? "Register an account" : "Login" }}
             </h2>
-            <div class="input-field">
-                <p>
-                    {{ registrationForm ? "Username" : "Username or Email" }}
-                </p>
-                <input v-model="form.username" type="text" />
+            <div class="input-field mt-8">
+                <label class="block">
+                    <span class="text-gray-700">{{
+                        registrationForm ? "Username" : "Username or Email"
+                    }}</span>
+                    <input
+                        type="text"
+                        class="form-input focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full px-0 py-2 pl-2 border-box"
+                        placeholder="Username"
+                        v-model="form.username"
+                    />
+                </label>
             </div>
-            <div v-if="registrationForm" class="input-field">
-                <p>Email</p>
-                <input v-model="form.email" type="text" />
+            <div v-if="registrationForm" class="input-field mt-4">
+                <label class="block">
+                    <span class="text-gray-700">Email</span>
+                    <input
+                        type="email"
+                        class="form-input focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                        placeholder="Email"
+                        v-model="form.email"
+                    />
+                </label>
             </div>
-            <div class="input-field">
-                <p>Password</p>
-                <input v-model="form.password" type="text" />
+            <div class="input-field mt-4">
+                <label class="block">
+                    <span class="text-gray-700">Password</span>
+                    <input
+                        type="password"
+                        class="form-input focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                        placeholder="Password"
+                        v-model="form.email"
+                    />
+                </label>
             </div>
-            <div v-if="registrationForm" class="input-field">
-                <p>Retype password</p>
-                <input v-model="form.retypedPassword" type="text" />
+            <div v-if="registrationForm" class="input-field mt-4">
+                <label class="block">
+                    <span class="text-gray-700">Repeat password</span>
+                    <input
+                        type="password"
+                        class="form-input focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                        placeholder="Repeat password"
+                        v-model="form.retypedPassword"
+                    />
+                </label>
             </div>
-            <button @click="submit" type="submit" class="signup-card__submit">
+            <button
+                @click="submit"
+                type="submit"
+                class="signup-card__submit mt-8 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
+            >
                 Submit
             </button>
         </form>
@@ -73,22 +105,12 @@ export default class Auth extends Vue {
 
 <style lang="scss" scoped>
 .signup-card {
-    width: 300px;
+    width: 400px;
     height: auto;
-    background-color: $white1;
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
     top: 150px;
-    padding: 32px;
-    box-sizing: border-box;
-    box-shadow: 0px 0px 23px -1px rgba(255, 127, 17, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    &__submit {
-        margin-top: 32px;
-    }
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.1);
 }
 </style>
