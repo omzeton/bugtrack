@@ -1,11 +1,8 @@
 <template>
     <div class="homepage">
         <div class="homepage-card">
-            <img
-                class="homepage-card__image"
-                src="~/assets/logo.png"
-                alt="Logo"
-            />
+            <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
+            <span>{{ characters }}</span>
             <div class="flex">
                 <nuxt-link
                     to="/login"
@@ -23,6 +20,28 @@
         </div>
     </div>
 </template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "~/plugins/nuxt-class-component";
+
+import { Character } from "~/apollo/schemas";
+import gqlGetCharacters from "~/apollo/queries/getCharacters.gql";
+
+@Component
+export default class IndexPage extends Vue {
+    characters: Character[] = [];
+
+    get apollo() {
+        return {
+            characters: {
+                query: gqlGetCharacters,
+                prefetch: true,
+            },
+        };
+    }
+}
+</script>
 
 <style lang="scss">
 .homepage {

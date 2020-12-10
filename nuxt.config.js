@@ -22,13 +22,11 @@ export default {
             },
             {
                 rel: "stylesheet",
-                href:
-                    "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap",
+                href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap",
             },
             {
                 rel: "stylesheet",
-                href:
-                    "https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap",
+                href: "https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap",
             },
         ],
     },
@@ -37,7 +35,7 @@ export default {
     css: ["~assets/scss/colors.scss"],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: ["~/plugins/vee-validate.js"],
+    plugins: ["~/plugins/vee-validate.js", "~/plugins/nuxt-class-component.js"],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
@@ -47,13 +45,23 @@ export default {
         // https://go.nuxtjs.dev/typescript
         "@nuxt/typescript-build",
         "@nuxtjs/tailwindcss",
+        "@nuxtjs/apollo",
     ],
+
+    apollo: {
+        clientConfigs: {
+            default: {
+                httpEndpoint: "https://rickandmortyapi.com/graphql",
+            },
+        },
+    },
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
         // https://go.nuxtjs.dev/axios
         "@nuxtjs/axios",
         "@nuxtjs/style-resources",
+        "@nuxtjs/apollo",
     ],
 
     styleResources: {
