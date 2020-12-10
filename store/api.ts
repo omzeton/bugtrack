@@ -1,11 +1,15 @@
 import { Module, VuexModule, Action } from "vuex-module-decorators";
 import axios from "axios";
 
-interface Payload {
+interface RegistrationForm {
     username: string;
     email: string;
     password: string;
-    retypedPassword: string;
+}
+
+interface LoginForm {
+    email: string;
+    password: string;
 }
 
 @Module({
@@ -14,9 +18,26 @@ interface Payload {
 })
 export default class Api extends VuexModule {
     @Action({ rawError: true })
-    public async sendRequest(data: Payload) {
+    public async REGISTER_USER({ username, email, password }: RegistrationForm) {
         try {
-            console.log({ data });
+            const payload: RegistrationForm = {
+                username,
+                email,
+                password,
+            };
+            console.log({ payload });
+            const response = await axios.get("http://localhost:3000/");
+        } catch (error) {
+            throw error;
+        }
+    }
+    public async LOGIN_USER({ email, password }: LoginForm) {
+        try {
+            const payload: LoginForm = {
+                email,
+                password,
+            };
+            console.log({ payload });
             const response = await axios.get("http://localhost:3000/");
         } catch (error) {
             throw error;

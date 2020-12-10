@@ -2,20 +2,13 @@
     <div class="signup-card rounded">
         <ValidationObserver>
             <form class="bg-white p-8" action="">
-                <h2
-                    class="text-center text-lg pt-4 font-roboto font-bold text-4xl"
-                >
+                <h2 class="text-center text-lg pt-4 font-roboto font-bold text-4xl">
                     {{ registrationForm ? "Register an account" : "Login" }}
                 </h2>
                 <div class="input-field mt-8">
                     <label class="block">
-                        <span class="text-gray-700 font-nunito">{{
-                            registrationForm ? "Username" : "Username or Email"
-                        }}</span>
-                        <ValidationProvider
-                            v-slot="{ errors }"
-                            rules="required"
-                        >
+                        <span class="text-gray-700 font-nunito">Username</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="text"
                                 class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full px-0 py-2 pl-2 border-box"
@@ -31,10 +24,7 @@
                 <div v-if="registrationForm" class="input-field mt-4">
                     <label class="block">
                         <span class="text-gray-700 font-nunito">Email</span>
-                        <ValidationProvider
-                            v-slot="{ errors }"
-                            rules="required|email"
-                        >
+                        <ValidationProvider v-slot="{ errors }" rules="required|email">
                             <input
                                 type="email"
                                 class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
@@ -50,10 +40,7 @@
                 <div class="input-field mt-4">
                     <label class="block">
                         <span class="text-gray-700 font-nunito">Password</span>
-                        <ValidationProvider
-                            v-slot="{ errors }"
-                            rules="required"
-                        >
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="password"
                                 class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
@@ -68,13 +55,8 @@
                 </div>
                 <div v-if="registrationForm" class="input-field mt-4">
                     <label class="block">
-                        <span class="text-gray-700 font-nunito"
-                            >Repeat password</span
-                        >
-                        <ValidationProvider
-                            v-slot="{ errors }"
-                            rules="required"
-                        >
+                        <span class="text-gray-700 font-nunito">Repeat password</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="password"
                                 class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
@@ -108,14 +90,9 @@
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
-const api = namespace("api");
+import { Form, RegistrationForm, LoginForm } from "../models/models";
 
-interface Form {
-    username: string;
-    email: string;
-    password: string;
-    retypedPassword: string;
-}
+const api = namespace("api");
 
 @Component({
     components: {
@@ -128,7 +105,8 @@ export default class Auth extends Vue {
     readonly registrationForm!: boolean;
 
     @api.Action
-    public sendRequest!: (data: Form) => void;
+    public REGISTER_USER!: (data: RegistrationForm) => void;
+    public LOGIN_USER!: (data: LoginForm) => void;
 
     form: Form = {
         username: "",
@@ -146,7 +124,12 @@ export default class Auth extends Vue {
         this.loading = true;
 
         if (this.form.password === this.form.retypedPassword) {
-            this.sendRequest(this.form);
+            const { username, email, password } = this.form;
+            if (this.registrationForm) {
+                this.REGISTER_USER({ username, email, password });
+            } else {
+                this.LOGIN_USER({ email, password });
+            }
             return;
         }
         this.passwordsError = true;
