@@ -1,3 +1,14 @@
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    roles: string[];
+    permissions: string[];
+}
+
+type Users = User[];
+
 interface RegistrationForm {
     username: string;
     email: string;
@@ -16,4 +27,4 @@ interface HTMLForm {
     retypedPassword: string;
 }
 
-export { HTMLForm, RegistrationForm, LoginForm };
+export { User, Users, HTMLForm, RegistrationForm, LoginForm };
