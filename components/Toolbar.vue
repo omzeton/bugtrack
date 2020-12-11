@@ -1,8 +1,8 @@
 <template>
     <div class="toolbar">
-        <a class="toolbar__logo flex-wrapper">
+        <nuxt-link to="/" tag="a" class="toolbar__logo flex-wrapper">
             <img src="~/assets/logo.png" alt="Logo" />
-        </a>
+        </nuxt-link>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>
             <nuxt-link to="/about" tag="div" class="toolbar__button flex-wrapper">About</nuxt-link>
@@ -25,8 +25,10 @@
     &__logo {
         position: absolute;
         left: 14px;
-        top: 0;
         height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
             height: 40px;
         }
@@ -47,6 +49,9 @@
         font-family: $rubik;
         outline: none;
         text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
             color: $orange;
         }
