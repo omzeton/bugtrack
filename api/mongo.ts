@@ -8,7 +8,7 @@ const connectToMongoDB = (cb: (_: MongoClient) => void) => {
         useNewUrlParser: true,
     })
         .then(client => {
-            console.log("🎄 MongoDB Connected!");
+            console.log("MongoDB Connected!");
             _client = client;
             cb(client);
         })
