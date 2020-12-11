@@ -1,5 +1,4 @@
-api/nodemon.json
-
+nodemon.json
 /logs
 *.log
 npm-debug.log*
