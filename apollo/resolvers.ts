@@ -11,17 +11,14 @@ export default {
                 .toArray();
             return result;
         },
-        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<boolean> => {
+        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<boolean | string> => {
             try {
                 const db = getDB();
+
+                // Find if user with this username and password exists in the database
                 const user = await db.collection("users").findOne({ username, password });
 
-                if (!user) {
-                    const error = new Error("User not found.");
-                    error["code"] = 401;
-                    throw error;
-                }
-
+                if (!user) return "Either password or username is wrong";
                 return !!user;
             } catch (e) {
                 throw e;

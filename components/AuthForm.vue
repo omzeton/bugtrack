@@ -1,6 +1,6 @@
 <template>
     <div class="signup-card rounded">
-        <ValidationObserver>
+        <ValidationObserver ref="observer">
             <form class="bg-white p-8 rounded" action="">
                 <h2 class="text-center text-lg pt-4 font-roboto font-bold text-4xl">
                     {{ registrationForm ? "Register an Account" : "Login" }}
@@ -128,44 +128,50 @@ export default class Auth extends Vue {
     loading: boolean = false;
     error: string = "";
 
+    get observer(): Vue & { validate: () => boolean } {
+        return this.$refs.observer as Vue & { validate: () => boolean };
+    }
+
     async submit(e: Event): Promise<void> {
         try {
             e.preventDefault();
-
             this.error = "";
             this.loading = true;
 
-            if (this.form.username === "" || this.form.email === "" || this.form.password === "" || this.form.retypedPassword === "") {
-                this.error = "Please fill all fields";
+            const isValid = await this.observer.validate();
+            if (!isValid) {
                 this.loading = false;
+                this.error = "Please fill all the fields";
                 return;
             }
 
-            if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
+            const { username, email, password, retypedPassword } = this.form;
+            if (this.registrationForm && password !== retypedPassword) {
+                this.loading = false;
                 this.error = "Passwords do not match";
+                return;
+            }
+
+            const route = this.registrationForm ? "/login" : "/board";
+
+            let error;
+            if (this.registrationForm) {
+                error = await this.REGISTER_USER({ username, email, password });
+            } else {
+                error = await this.LOGIN_USER({ username, password });
+            }
+
+            console.log({ error });
+
+            if (error.data.errors) {
+                this.error = error.data.errors[0].message;
                 this.loading = false;
                 return;
             }
 
-            const { username, email, password } = this.form;
-            if (this.registrationForm) {
-                const error = await this.REGISTER_USER({ username, email, password });
-                if (error.data.errors) {
-                    this.error = error.data.errors[0].message;
-                    this.loading = false;
-                } else {
-                    this.$router.push("/login");
-                }
-            } else {
-                const error = await this.LOGIN_USER({ username, password });
-                if (error) {
-                    this.error = error.data.errors[0].message;
-                    this.loading = false;
-                } else {
-                    this.$router.push("/board");
-                }
-            }
+            this.$router.push(route);
         } catch (e) {
+            console.log({ e });
             throw e;
         }
     }
