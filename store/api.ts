@@ -37,7 +37,12 @@ export default class Api extends VuexModule {
                 query: `
                     query($username:String!, $password:String!) {
                         logIn(username:$username, password:$password) {
-                            userExists
+                            user {
+                                _id
+                                username
+                                password
+                                email
+                            }
                             token
                         }
                     }

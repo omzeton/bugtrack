@@ -9,7 +9,7 @@ export default gql`
     }
 
     type LogInResult {
-        userExists: Boolean
+        user: User
         token: String
     }
 

@@ -1,4 +1,4 @@
-import { User, LogInResponse } from "../models/models";
+import { User, LogInResult } from "../models/models";
 import { getDB } from "../api/mongo";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -13,7 +13,7 @@ export default {
                 .toArray();
             return result;
         },
-        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<LogInResponse> => {
+        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<LogInResult> => {
             try {
                 const db = getDB();
 
@@ -38,7 +38,7 @@ export default {
                 );
 
                 return {
-                    userExists: !!user,
+                    user,
                     token,
                 };
             } catch (e) {
