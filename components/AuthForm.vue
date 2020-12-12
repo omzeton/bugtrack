@@ -14,6 +14,7 @@
                                 class="form-input bg-green-100 text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-200 mt-1 block w-full px-0 py-2 pl-2 border-box"
                                 placeholder="Username"
                                 v-model="form.username"
+                                @focus="error = ''"
                             />
                             <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
                                 {{ "❌ " + errors[0] }}
@@ -30,6 +31,7 @@
                                 class="form-input bg-green-100 text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-200 mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Email"
                                 v-model="form.email"
+                                @focus="error = ''"
                             />
                             <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
                                 {{ "❌ " + errors[0] }}
@@ -46,6 +48,7 @@
                                 class="form-input bg-green-100 text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-200 mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Password"
                                 v-model="form.password"
+                                @focus="error = ''"
                             />
                             <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
                                 {{ "❌ " + errors[0] }}
@@ -62,6 +65,7 @@
                                 class="form-input bg-green-100 text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-200 mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Repeat password"
                                 v-model="form.retypedPassword"
+                                @focus="error = ''"
                             />
                             <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
                                 {{ "❌ " + errors[0] }}
@@ -111,9 +115,9 @@ export default class Auth extends Vue {
     readonly registrationForm!: boolean;
 
     @api.Action
-    public REGISTER_USER!: (data: RegistrationForm) => string;
+    public REGISTER_USER!: (data: RegistrationForm) => any;
     @api.Action
-    public LOGIN_USER!: (data: LoginForm) => string;
+    public LOGIN_USER!: (data: LoginForm) => any;
 
     form: HTMLForm = {
         username: "",
@@ -131,6 +135,12 @@ export default class Auth extends Vue {
             this.error = "";
             this.loading = true;
 
+            if (this.form.username === "" || this.form.email === "" || this.form.password === "" || this.form.retypedPassword === "") {
+                this.error = "Please fill all fields";
+                this.loading = false;
+                return;
+            }
+
             if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
                 this.error = "Passwords do not match";
                 this.loading = false;
@@ -140,8 +150,8 @@ export default class Auth extends Vue {
             const { username, email, password } = this.form;
             if (this.registrationForm) {
                 const error = await this.REGISTER_USER({ username, email, password });
-                if (error) {
-                    this.error = error;
+                if (error.data.errors) {
+                    this.error = error.data.errors[0].message;
                     this.loading = false;
                 } else {
                     this.$router.push("/login");
@@ -149,7 +159,7 @@ export default class Auth extends Vue {
             } else {
                 const error = await this.LOGIN_USER({ username, password });
                 if (error) {
-                    this.error = error;
+                    this.error = error.data.errors[0].message;
                     this.loading = false;
                 } else {
                     this.$router.push("/board");
