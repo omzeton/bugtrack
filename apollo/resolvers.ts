@@ -1,5 +1,6 @@
 import { User } from "../models/models";
 import { getDB } from "../api/mongo";
+import bcrypt from "bcryptjs";
 
 export default {
     Query: {
@@ -16,9 +17,13 @@ export default {
                 const db = getDB();
 
                 // Find if user with this username and password exists in the database
-                const user = await db.collection("users").findOne({ username, password });
-
+                const user = await db.collection("users").findOne({ username });
                 if (!user) throw new Error("Username or password is incorrect");
+
+                // If there is like that in db compare passwords and return the user
+                const passwordsAreEqual = await bcrypt.compare(password, user.password);
+                if (!passwordsAreEqual) throw new Error("Username or password is incorrect");
+
                 return !!user;
             } catch (e) {
                 throw e;
@@ -39,7 +44,8 @@ export default {
                 if (userWithEmail) throw new Error("Email already registered");
 
                 // If username and email are unique create a new user
-                const newUser = await db.collection("users").insertOne({ username, password, email });
+                const hashedPassword = await bcrypt.hash(password, 12);
+                const newUser = await db.collection("users").insertOne({ username, password: hashedPassword, email });
                 return newUser.ops[0];
             } catch (e) {
                 throw e;
