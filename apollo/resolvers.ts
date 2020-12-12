@@ -1,5 +1,7 @@
-import { User } from "../models/models";
+import { User, LogInResult } from "../models/models";
 import { getDB } from "../api/mongo";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export default {
     Query: {
@@ -11,15 +13,34 @@ export default {
                 .toArray();
             return result;
         },
-        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<boolean | string> => {
+        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<LogInResult> => {
             try {
                 const db = getDB();
 
-                // Find if user with this username and password exists in the database
-                const user = await db.collection("users").findOne({ username, password });
-
+                // If username is not corresponding to any username in db throw error
+                const user = await db.collection("users").findOne({ username });
                 if (!user) throw new Error("Username or password is incorrect");
-                return !!user;
+
+                // If bcrypt can't compare password from input and user password throw error
+                const passwordsAreEqual = await bcrypt.compare(password, user.password);
+                if (!passwordsAreEqual) throw new Error("Username or password is incorrect");
+
+                // If everything is alright assign a new jwt to the user session
+                const token = jwt.sign(
+                    {
+                        userId: user._id.toString(),
+                        username: user.username,
+                    },
+                    ("" + process.env.JWT_SECRET) as string,
+                    {
+                        expiresIn: "1d",
+                    }
+                );
+
+                return {
+                    user,
+                    token,
+                };
             } catch (e) {
                 throw e;
             }
@@ -39,7 +60,8 @@ export default {
                 if (userWithEmail) throw new Error("Email already registered");
 
                 // If username and email are unique create a new user
-                const newUser = await db.collection("users").insertOne({ username, password, email });
+                const hashedPassword = await bcrypt.hash(password, 12);
+                const newUser = await db.collection("users").insertOne({ username, password: hashedPassword, email });
                 return newUser.ops[0];
             } catch (e) {
                 throw e;

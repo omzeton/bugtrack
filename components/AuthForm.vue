@@ -99,9 +99,10 @@
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
 import Loader from "@/components/Loader.vue";
-import { RegistrationForm, LoginForm, HTMLForm } from "../models/models";
+import { RegistrationForm, LoginForm, HTMLForm, User } from "../models/models";
 
 const api = namespace("api");
+const user = namespace("user");
 
 @Component({
     components: {
@@ -118,6 +119,8 @@ export default class Auth extends Vue {
     public REGISTER_USER!: (data: RegistrationForm) => any;
     @api.Action
     public LOGIN_USER!: (data: LoginForm) => any;
+    @user.Mutation
+    public updateUserInfo!: (data: User & { token: string }) => void;
 
     form: HTMLForm = {
         username: "",
@@ -154,21 +157,20 @@ export default class Auth extends Vue {
 
             const route = this.registrationForm ? "/login" : "/board";
 
-            let error;
+            let res;
             if (this.registrationForm) {
-                error = await this.REGISTER_USER({ username, email, password });
+                res = await this.REGISTER_USER({ username, email, password });
             } else {
-                error = await this.LOGIN_USER({ username, password });
+                res = await this.LOGIN_USER({ username, password });
             }
 
-            console.log({ error });
-
-            if (error.data.errors) {
-                this.error = error.data.errors[0].message;
+            if (res.data.errors) {
+                this.error = res.data.errors[0].message;
                 this.loading = false;
                 return;
             }
 
+            if (!this.registrationForm) this.updateUserInfo(res.data.data.logIn);
             this.$router.push(route);
         } catch (e) {
             console.log({ e });
