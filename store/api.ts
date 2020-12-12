@@ -44,7 +44,7 @@ export default class Api extends VuexModule {
                     password,
                 },
             });
-            return !!res.data.data.logIn;
+            return res;
         } catch (error) {
             throw error;
         }

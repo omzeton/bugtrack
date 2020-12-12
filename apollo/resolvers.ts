@@ -18,7 +18,7 @@ export default {
                 // Find if user with this username and password exists in the database
                 const user = await db.collection("users").findOne({ username, password });
 
-                if (!user) return "Either password or username is wrong";
+                if (!user) throw new Error("Username or password is incorrect");
                 return !!user;
             } catch (e) {
                 throw e;
