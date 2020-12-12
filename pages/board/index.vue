@@ -1,11 +1,13 @@
 <template>
     <div class="homescreen">
-        <h2>Welcome {{ userInfo.user.username }}!</h2>
-        <p>id: {{ userInfo.user._id }}</p>
-        <p>email: {{ userInfo.user.email }}</p>
-        <p>password: {{ userInfo.user.password }}</p>
-        <p>username: {{ userInfo.user.username }}</p>
-        <p>token: {{ userInfo.token }}</p>
+        <template v-if="userInfo.user">
+            <h2>Welcome {{ userInfo.user.username }}!</h2>
+            <p>id: {{ userInfo.user._id }}</p>
+            <p>email: {{ userInfo.user.email }}</p>
+            <p>password: {{ userInfo.user.password }}</p>
+            <p>username: {{ userInfo.user.username }}</p>
+            <p>token: {{ userInfo.token }}</p>
+        </template>
     </div>
 </template>
 

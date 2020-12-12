@@ -1,5 +1,12 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import * as models from "~/models/models";
+
+interface TestUserData {
+    _id: string;
+    email: string;
+    password: string;
+    username: string;
+    token: string;
+}
 
 @Module({
     stateFactory: true,
@@ -7,7 +14,7 @@ import * as models from "~/models/models";
 })
 export default class User extends VuexModule {
     public isLoggedIn: boolean = false;
-    public userInfo: models.User & { token: string } = {
+    public userInfo: TestUserData = {
         _id: "",
         email: "",
         password: "",
@@ -20,9 +27,8 @@ export default class User extends VuexModule {
     }
 
     // Just for testing purposes
-    @Action({ rawError: true })
-    UPDATE_USER_INFO(data: models.User & { token: string }): void {
-        console.log({ this: this });
-        this.context.state.userInfo = { ...data };
+    @Mutation
+    public updateUserInfo(data: TestUserData) {
+        this.userInfo = { ...data };
     }
 }

@@ -119,8 +119,8 @@ export default class Auth extends Vue {
     public REGISTER_USER!: (data: RegistrationForm) => any;
     @api.Action
     public LOGIN_USER!: (data: LoginForm) => any;
-    @user.Action
-    public UPDATE_USER_INFO!: (data: User & { token: string }) => void;
+    @user.Mutation
+    public updateUserInfo!: (data: User & { token: string }) => void;
 
     form: HTMLForm = {
         username: "",
@@ -170,9 +170,7 @@ export default class Auth extends Vue {
                 return;
             }
 
-            console.log({ res });
-
-            if (!this.registrationForm) this.UPDATE_USER_INFO(res.data.data.logIn);
+            if (!this.registrationForm) this.updateUserInfo(res.data.data.logIn);
             this.$router.push(route);
         } catch (e) {
             console.log({ e });
