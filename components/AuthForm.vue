@@ -109,8 +109,9 @@ export default class Auth extends Vue {
     readonly registrationForm!: boolean;
 
     @api.Action
-    public REGISTER_USER!: (data: RegistrationForm) => void;
-    public LOGIN_USER!: (data: LoginForm) => void;
+    public REGISTER_USER!: (data: RegistrationForm, cb: () => void) => void;
+    @api.Action
+    public LOGIN_USER!: (data: LoginForm, cb: () => void) => void;
 
     form: HTMLForm = {
         username: "",
@@ -127,17 +128,18 @@ export default class Auth extends Vue {
         this.passwordsError = false;
         this.loading = true;
 
-        if (this.form.password === this.form.retypedPassword) {
-            const { username, email, password } = this.form;
-            if (this.registrationForm) {
-                this.REGISTER_USER({ username, email, password });
-            } else {
-                this.LOGIN_USER({ email, password });
-            }
+        if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
+            this.passwordsError = true;
+            this.loading = false;
             return;
         }
-        this.passwordsError = true;
-        this.loading = false;
+
+        const { username, email, password } = this.form;
+        if (this.registrationForm) {
+            this.REGISTER_USER({ username, email, password }, () => this.$router.push("/login"));
+        } else {
+            this.LOGIN_USER({ username, password }, () => this.$router.push("/login"));
+        }
     }
 }
 </script>

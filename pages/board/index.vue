@@ -8,19 +8,6 @@
 import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
 
-// @Component({
-//     apollo: {
-//         user: gql`
-//             query {
-//                 user(id: "28") {
-//                     name
-//                     email
-//                     password
-//                 }
-//             }
-//         `,
-//     },
-// })
 @Component
 export default class Board extends Vue {}
 </script>
