@@ -32,11 +32,11 @@ export default {
 
                 // Find if user with this username already exists
                 const userWithUsername = await db.collection("users").findOne({ username });
-                if (userWithUsername) return "Username already taken";
+                if (userWithUsername) throw new Error("Username already taken");
 
                 // Find if user with this email already exists
                 const userWithEmail = await db.collection("users").findOne({ email });
-                if (userWithEmail) return "Email already registered";
+                if (userWithEmail) throw new Error("Email already registered");
 
                 // If username and email are unique create a new user
                 const newUser = await db.collection("users").insertOne({ username, password, email });
