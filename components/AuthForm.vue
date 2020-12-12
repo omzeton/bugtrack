@@ -141,10 +141,11 @@ export default class Auth extends Vue {
                 this.$router.push("/login");
             } else {
                 const valid = await this.LOGIN_USER({ username, password });
-                if (valid) {
+                if (!valid) {
                     this.loading = false;
-                    this.$router.push("/board");
+                    return;
                 }
+                this.$router.push("/board");
             }
         } catch (e) {
             throw e;
