@@ -1,11 +1,7 @@
 <template>
     <div class="homepage">
         <div class="homepage-card">
-            <img
-                class="homepage-card__image"
-                src="~/assets/logo.png"
-                alt="Logo"
-            />
+            <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
             <div class="flex">
                 <nuxt-link
                     to="/login"
@@ -23,6 +19,14 @@
         </div>
     </div>
 </template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "~/plugins/nuxt-class-component";
+
+@Component
+export default class IndexPage extends Vue {}
+</script>
 
 <style lang="scss">
 .homepage {

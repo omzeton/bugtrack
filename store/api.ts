@@ -1,12 +1,6 @@
 import { Module, VuexModule, Action } from "vuex-module-decorators";
+import { RegistrationForm, LoginForm } from "../models/models";
 import axios from "axios";
-
-interface Payload {
-    username: string;
-    email: string;
-    password: string;
-    retypedPassword: string;
-}
 
 @Module({
     stateFactory: true,
@@ -14,9 +8,43 @@ interface Payload {
 })
 export default class Api extends VuexModule {
     @Action({ rawError: true })
-    public async sendRequest(data: Payload) {
+    public async REGISTER_USER({ username, email, password }: RegistrationForm) {
         try {
-            const response = await axios.get("http://localhost:3000/");
+            await axios.post("http://localhost:4000/graphql", {
+                query: `
+                    mutation registration($username:String!, $password:String!, $email:String!) {
+                        registerUser(username:$username, password:$password, email:$email) {
+                            username
+                            email
+                        }
+                    }
+                `,
+                variables: {
+                    username,
+                    email,
+                    password,
+                },
+            });
+            return;
+        } catch (error) {
+            throw error;
+        }
+    }
+    @Action({ rawError: true })
+    public async LOGIN_USER({ username, password }: LoginForm, router) {
+        try {
+            const res = await axios.post("http://localhost:4000/graphql", {
+                query: `
+                    query($username:String!, $password:String!) {
+                        logIn(username:$username, password:$password)
+                    }
+                `,
+                variables: {
+                    username,
+                    password,
+                },
+            });
+            return !!res.data.data.logIn;
         } catch (error) {
             throw error;
         }

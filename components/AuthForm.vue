@@ -1,109 +1,155 @@
 <template>
     <div class="signup-card rounded">
-        <form class="bg-white p-8" action="">
-            <h2 class="text-center text-lg pt-4 font-roboto font-bold text-4xl">
-                {{ registrationForm ? "Register an account" : "Login" }}
-            </h2>
-            <div class="input-field mt-8">
-                <label class="block">
-                    <span class="text-gray-700 font-nunito">{{
-                        registrationForm ? "Username" : "Username or Email"
-                    }}</span>
-                    <input
-                        type="text"
-                        class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full px-0 py-2 pl-2 border-box"
-                        placeholder="Username"
-                        v-model="form.username"
-                    />
-                </label>
-            </div>
-            <div v-if="registrationForm" class="input-field mt-4">
-                <label class="block">
-                    <span class="text-gray-700 font-nunito">Email</span>
-                    <input
-                        type="email"
-                        class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
-                        placeholder="Email"
-                        v-model="form.email"
-                    />
-                </label>
-            </div>
-            <div class="input-field mt-4">
-                <label class="block">
-                    <span class="text-gray-700 font-nunito">Password</span>
-                    <input
-                        type="password"
-                        class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
-                        placeholder="Password"
-                        v-model="form.email"
-                    />
-                </label>
-            </div>
-            <div v-if="registrationForm" class="input-field mt-4">
-                <label class="block">
-                    <span class="text-gray-700 font-nunito"
-                        >Repeat password</span
+        <ValidationObserver>
+            <form class="bg-white p-8" action="">
+                <h2 class="text-center text-lg pt-4 font-roboto font-bold text-4xl">
+                    {{ registrationForm ? "Register an account" : "Login" }}
+                </h2>
+                <div class="input-field mt-8">
+                    <label class="block">
+                        <span class="text-gray-700 font-nunito">Username</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                            <input
+                                type="text"
+                                class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full px-0 py-2 pl-2 border-box"
+                                placeholder="Username"
+                                v-model="form.username"
+                            />
+                            <span class="text-red-400 font-nunito text-sm mt-2">
+                                {{ errors[0] }}
+                            </span>
+                        </ValidationProvider>
+                    </label>
+                </div>
+                <div v-if="registrationForm" class="input-field mt-4">
+                    <label class="block">
+                        <span class="text-gray-700 font-nunito">Email</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                            <input
+                                type="email"
+                                class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                                placeholder="Email"
+                                v-model="form.email"
+                            />
+                            <span class="text-red-400 font-nunito text-sm mt-2">
+                                {{ errors[0] }}
+                            </span>
+                        </ValidationProvider>
+                    </label>
+                </div>
+                <div class="input-field mt-4">
+                    <label class="block">
+                        <span class="text-gray-700 font-nunito">Password</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                            <input
+                                type="password"
+                                class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                                placeholder="Password"
+                                v-model="form.password"
+                            />
+                            <span class="text-red-400 font-nunito text-sm mt-2">
+                                {{ errors[0] }}
+                            </span>
+                        </ValidationProvider>
+                    </label>
+                </div>
+                <div v-if="registrationForm" class="input-field mt-4">
+                    <label class="block">
+                        <span class="text-gray-700 font-nunito">Repeat password</span>
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                            <input
+                                type="password"
+                                class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
+                                placeholder="Repeat password"
+                                v-model="form.retypedPassword"
+                            />
+                            <span class="text-red-400 font-nunito text-sm mt-2">
+                                {{ errors[0] }}
+                            </span>
+                        </ValidationProvider>
+                    </label>
+                </div>
+                <div class="flex items-center">
+                    <button
+                        @click="submit"
+                        type="submit"
+                        class="font-roboto signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
                     >
-                    <input
-                        type="password"
-                        class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
-                        placeholder="Repeat password"
-                        v-model="form.retypedPassword"
-                    />
-                </label>
-            </div>
-            <button
-                @click="submit"
-                type="submit"
-                class="font-roboto signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
-            >
-                Submit
-            </button>
-            <p
-                class="font-nunito"
-                :style="loading ? 'display: block;' : 'display: none;'"
-            >
-                Loading...
-            </p>
-        </form>
+                        Submit
+                    </button>
+                    <transition name="fade">
+                        <Loader v-if="loading" class="ml-4 mb-16" />
+                    </transition>
+                </div>
+                <p v-if="passwordsError" class="font-nunito text-red-400 mt-4">
+                    Passwords do not match
+                </p>
+            </form>
+        </ValidationObserver>
     </div>
 </template>
 
 <script lang="ts">
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
+import Loader from "@/components/Loader.vue";
+import { RegistrationForm, LoginForm, HTMLForm } from "../models/models";
+
 const api = namespace("api");
 
-interface Form {
-    username: string;
-    email: string;
-    password: string;
-    retypedPassword: string;
-}
-
-@Component
+@Component({
+    components: {
+        ValidationProvider,
+        ValidationObserver,
+        Loader,
+    },
+})
 export default class Auth extends Vue {
     @Prop({ default: false })
     readonly registrationForm!: boolean;
 
     @api.Action
-    public sendRequest!: (data: Form) => void;
+    public REGISTER_USER!: (data: RegistrationForm) => void;
+    @api.Action
+    public LOGIN_USER!: (data: LoginForm) => boolean;
 
-    form: Form = {
+    form: HTMLForm = {
         username: "",
         email: "",
         password: "",
         retypedPassword: "",
     };
     loading: boolean = false;
+    passwordsError: boolean = false;
 
-    submit(e: Event): void {
-        this.loading = true;
-        e.preventDefault();
-        this.sendRequest(this.form);
-        setTimeout(() => {
-            this.loading = false;
-        }, 1000);
-        return;
+    async submit(e: Event): Promise<void> {
+        try {
+            e.preventDefault();
+
+            this.passwordsError = false;
+            this.loading = true;
+
+            if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
+                this.passwordsError = true;
+                this.loading = false;
+                return;
+            }
+
+            const { username, email, password } = this.form;
+            if (this.registrationForm) {
+                await this.REGISTER_USER({ username, email, password });
+                this.$router.push("/login");
+            } else {
+                const valid = await this.LOGIN_USER({ username, password });
+                if (!valid) {
+                    this.loading = false;
+                    return;
+                }
+                this.$router.push("/board");
+            }
+        } catch (e) {
+            throw e;
+        }
     }
 }
 </script>
