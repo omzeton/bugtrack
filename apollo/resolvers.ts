@@ -14,7 +14,7 @@ export default {
         logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<boolean> => {
             try {
                 const db = getDB();
-                const user = await db.collection("users").find({ username, password });
+                const user = await db.collection("users").findOne({ username, password });
 
                 if (!user) {
                     const error = new Error("User not found.");

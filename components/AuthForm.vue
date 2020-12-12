@@ -109,9 +109,9 @@ export default class Auth extends Vue {
     readonly registrationForm!: boolean;
 
     @api.Action
-    public REGISTER_USER!: (data: RegistrationForm, cb: () => void) => void;
+    public REGISTER_USER!: (data: RegistrationForm) => void;
     @api.Action
-    public LOGIN_USER!: (data: LoginForm, cb: () => void) => void;
+    public LOGIN_USER!: (data: LoginForm) => boolean;
 
     form: HTMLForm = {
         username: "",
@@ -122,23 +122,32 @@ export default class Auth extends Vue {
     loading: boolean = false;
     passwordsError: boolean = false;
 
-    submit(e: Event): void {
-        e.preventDefault();
+    async submit(e: Event): Promise<void> {
+        try {
+            e.preventDefault();
 
-        this.passwordsError = false;
-        this.loading = true;
+            this.passwordsError = false;
+            this.loading = true;
 
-        if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
-            this.passwordsError = true;
-            this.loading = false;
-            return;
-        }
+            if (this.registrationForm && this.form.password !== this.form.retypedPassword) {
+                this.passwordsError = true;
+                this.loading = false;
+                return;
+            }
 
-        const { username, email, password } = this.form;
-        if (this.registrationForm) {
-            this.REGISTER_USER({ username, email, password }, () => this.$router.push("/login"));
-        } else {
-            this.LOGIN_USER({ username, password }, () => this.$router.push("/login"));
+            const { username, email, password } = this.form;
+            if (this.registrationForm) {
+                await this.REGISTER_USER({ username, email, password });
+                this.$router.push("/login");
+            } else {
+                const valid = await this.LOGIN_USER({ username, password });
+                if (valid) {
+                    this.loading = false;
+                    this.$router.push("/board");
+                }
+            }
+        } catch (e) {
+            throw e;
         }
     }
 }

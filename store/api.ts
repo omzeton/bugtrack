@@ -8,7 +8,7 @@ import axios from "axios";
 })
 export default class Api extends VuexModule {
     @Action({ rawError: true })
-    public async REGISTER_USER({ username, email, password }: RegistrationForm, redirect: () => void) {
+    public async REGISTER_USER({ username, email, password }: RegistrationForm) {
         try {
             await axios.post("http://localhost:4000/graphql", {
                 query: `
@@ -25,13 +25,13 @@ export default class Api extends VuexModule {
                     password,
                 },
             });
-            redirect();
+            return;
         } catch (error) {
             throw error;
         }
     }
     @Action({ rawError: true })
-    public async LOGIN_USER({ username, password }: LoginForm, redirect: () => void) {
+    public async LOGIN_USER({ username, password }: LoginForm, router) {
         try {
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `
@@ -44,7 +44,7 @@ export default class Api extends VuexModule {
                     password,
                 },
             });
-            if (res.data.data.logIn) redirect();
+            return !!res.data.data.logIn;
         } catch (error) {
             throw error;
         }
