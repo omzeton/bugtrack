@@ -11,7 +11,7 @@ const server = new ApolloServer({
 });
 server.applyMiddleware({ app });
 connectToMongoDB(() => {
-    app.listen({ port: 7000 }, () => {
-        console.log(`Server ready at http://localhost:7000${server.graphqlPath}`);
+    app.listen({ port: 4000 }, () => {
+        console.log(`Server ready at http://localhost:4000${server.graphqlPath}`);
     });
 });

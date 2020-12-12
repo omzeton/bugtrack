@@ -10,13 +10,18 @@ export default class Api extends VuexModule {
     @Action({ rawError: true })
     public async REGISTER_USER({ username, email, password }: RegistrationForm) {
         try {
-            const payload: RegistrationForm = {
-                username,
-                email,
-                password,
-            };
-            console.log({ payload });
-            const response = await axios.get("http://localhost:3000/");
+            const result = await axios({
+                url: "http://localhost:4000/graphql",
+                method: "post",
+                data: {
+                    query: `
+                        mutation register {
+                            registerUser(username: ${username}, password: ${password}, email: ${email})
+                        }
+                  `,
+                },
+            });
+            console.log({ result });
         } catch (error) {
             throw error;
         }
@@ -28,7 +33,7 @@ export default class Api extends VuexModule {
                 password,
             };
             console.log({ payload });
-            const response = await axios.get("http://localhost:3000/");
+            const response = await axios.post("http://localhost:7000/graphql", payload);
         } catch (error) {
             throw error;
         }

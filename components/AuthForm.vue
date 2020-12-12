@@ -24,7 +24,7 @@
                 <div v-if="registrationForm" class="input-field mt-4">
                     <label class="block">
                         <span class="text-gray-700 font-nunito">Email</span>
-                        <ValidationProvider v-slot="{ errors }" rules="required|email">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="email"
                                 class="form-input text-sm font-nunito focus:ring-2 focus:ring-green-100 outline-none focus:bg-green-100 mt-1 block w-full border-box"
@@ -69,16 +69,18 @@
                         </ValidationProvider>
                     </label>
                 </div>
-                <button
-                    @click="submit"
-                    type="submit"
-                    class="font-roboto signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
-                >
-                    Submit
-                </button>
-                <p v-if="loading" class="font-nunito mt-4">
-                    Loading...
-                </p>
+                <div class="flex items-center">
+                    <button
+                        @click="submit"
+                        type="submit"
+                        class="font-roboto signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
+                    >
+                        Submit
+                    </button>
+                    <transition name="fade">
+                        <Loader v-if="loading" class="ml-4 mb-16" />
+                    </transition>
+                </div>
                 <p v-if="passwordsError" class="font-nunito text-red-400 mt-4">
                     Passwords do not match
                 </p>
@@ -90,6 +92,7 @@
 <script lang="ts">
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
+import Loader from "@/components/Loader.vue";
 import { RegistrationForm, LoginForm, HTMLForm } from "../models/models";
 
 const api = namespace("api");
@@ -98,6 +101,7 @@ const api = namespace("api");
     components: {
         ValidationProvider,
         ValidationObserver,
+        Loader,
     },
 })
 export default class Auth extends Vue {

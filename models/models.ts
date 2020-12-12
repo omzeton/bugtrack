@@ -1,10 +1,8 @@
 interface User {
-    id: string;
-    name: string;
+    _id: string;
+    username: string;
     email: string;
     password: string;
-    roles: string[];
-    permissions: string[];
 }
 
 type Users = User[];

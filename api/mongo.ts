@@ -1,6 +1,6 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Db } from "mongodb";
 
-let _client: MongoClient;
+let _db: Db;
 
 const connectToMongoDB = (cb: (_: MongoClient) => void) => {
     MongoClient.connect(process.env.MONGODB_URI as string, {
@@ -9,7 +9,7 @@ const connectToMongoDB = (cb: (_: MongoClient) => void) => {
     })
         .then(client => {
             console.log("MongoDB Connected!");
-            _client = client;
+            _db = client.db();
             cb(client);
         })
         .catch(err => {
@@ -17,11 +17,11 @@ const connectToMongoDB = (cb: (_: MongoClient) => void) => {
         });
 };
 
-const getMongoClient = () => {
-    if (_client) {
-        return _client;
+const getDB = () => {
+    if (_db) {
+        return _db;
     }
-    throw "No client found!";
+    throw "No database found!";
 };
 
-export { connectToMongoDB, getMongoClient };
+export { connectToMongoDB, getDB };
