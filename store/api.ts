@@ -31,12 +31,15 @@ export default class Api extends VuexModule {
         }
     }
     @Action({ rawError: true })
-    public async LOGIN_USER({ username, password }: LoginForm, router) {
+    public async LOGIN_USER({ username, password }: LoginForm) {
         try {
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `
                     query($username:String!, $password:String!) {
-                        logIn(username:$username, password:$password)
+                        logIn(username:$username, password:$password) {
+                            userExists
+                            token
+                        }
                     }
                 `,
                 variables: {

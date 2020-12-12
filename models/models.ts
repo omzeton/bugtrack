@@ -25,4 +25,9 @@ interface HTMLForm {
     retypedPassword: string;
 }
 
-export { User, Users, HTMLForm, RegistrationForm, LoginForm };
+interface LogInResponse {
+    userExists: boolean;
+    token: string;
+}
+
+export { User, Users, HTMLForm, RegistrationForm, LoginForm, LogInResponse };

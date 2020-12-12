@@ -1,6 +1,7 @@
-import { User } from "../models/models";
+import { User, LogInResponse } from "../models/models";
 import { getDB } from "../api/mongo";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export default {
     Query: {
@@ -12,19 +13,34 @@ export default {
                 .toArray();
             return result;
         },
-        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<boolean | string> => {
+        logIn: async (_root: undefined, { username, password }: { username: string; password: string }): Promise<LogInResponse> => {
             try {
                 const db = getDB();
 
-                // Find if user with this username and password exists in the database
+                // If username is not corresponding to any username in db throw error
                 const user = await db.collection("users").findOne({ username });
                 if (!user) throw new Error("Username or password is incorrect");
 
-                // If there is like that in db compare passwords and return the user
+                // If bcrypt can't compare password from input and user password throw error
                 const passwordsAreEqual = await bcrypt.compare(password, user.password);
                 if (!passwordsAreEqual) throw new Error("Username or password is incorrect");
 
-                return !!user;
+                // If everything is alright assign a new jwt to the user session
+                const token = jwt.sign(
+                    {
+                        userId: user._id.toString(),
+                        username: user.username,
+                    },
+                    ("" + process.env.JWT_SECRET) as string,
+                    {
+                        expiresIn: "1d",
+                    }
+                );
+
+                return {
+                    userExists: !!user,
+                    token,
+                };
             } catch (e) {
                 throw e;
             }

@@ -8,9 +8,14 @@ export default gql`
         email: String!
     }
 
+    type LogInResult {
+        userExists: Boolean
+        token: String
+    }
+
     type Query {
         users: [User]
-        logIn(username: String!, password: String!): Boolean
+        logIn(username: String!, password: String!): LogInResult
     }
 
     type Mutation {
