@@ -1,5 +1,6 @@
 import { Module, VuexModule, Action, Mutation } from "vuex-module-decorators";
 import { RegistrationForm, LoginForm } from "../models/models";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 @Module({
@@ -50,18 +51,16 @@ export default class Api extends VuexModule {
                     password,
                 },
             });
-            localStorage.setItem("logged_user_id", JSON.stringify(res.data.data.logIn.user._id));
+            Cookies.set("logged-user-id", JSON.stringify(res.data.data.logIn.user._id));
             return res;
         } catch (error) {
             throw error;
         }
     }
     @Action({ rawError: true })
-    public async FETCH_USER_DATA() {
+    public async FETCH_USER_DATA(_id: any) {
         try {
-            const loggedUser = JSON.parse(localStorage.getItem("logged_user_id") || "{}");
-            if (!loggedUser) throw new Error("User not found in localStorage");
-
+            const cookieId = _id ? _id._id : JSON.parse(Cookies.get("logged-user-id"));
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `
                     query($_id:ID!) {
@@ -73,7 +72,7 @@ export default class Api extends VuexModule {
                     }
                 `,
                 variables: {
-                    _id: loggedUser,
+                    _id: cookieId,
                 },
             });
             this.context.commit("updateUserInformation", res.data.data.userData);
@@ -87,7 +86,7 @@ export default class Api extends VuexModule {
         this.userInformation = data;
     }
 
-    get userData() {
+    get GET_USER_DATA() {
         return this.userInformation;
     }
 }

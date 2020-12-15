@@ -1,6 +1,6 @@
 <template>
     <div class="task-board">
-        <template v-if="userData.username">
+        <template v-if="userData">
             <h2 class="splash__header font-roboto">
                 Welcome back <span class="text-toxic">{{ userData.username }}</span
                 >.
@@ -22,10 +22,31 @@ export default class Board extends Vue {
     @api.Action
     public FETCH_USER_DATA!: () => any;
     @api.Getter
-    public userData!: any;
+    public GET_USER_DATA!: any;
 
-    mounted() {
-        this.FETCH_USER_DATA();
+    public userData: any = null;
+
+    async mounted() {
+        try {
+            if (!this.userData) {
+                await this.FETCH_USER_DATA();
+                this.userData = this.GET_USER_DATA;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async asyncData(context) {
+        try {
+            if (context && context.req) {
+                // TODO: Maximum call stack erreicht
+                // const userData = await context.store.dispatch("api/FETCH_USER_DATA", { _id: context.req.headers.cookie });
+                // return userData;
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 }
 </script>
