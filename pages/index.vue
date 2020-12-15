@@ -5,6 +5,7 @@
             <p class="splash__sub font-nunito mt-8 text-white font-light text-sm">
                 A tool to help you work smarter! BugTrack is app that lets you segregate all your tasks and problems into small chunks that you can tackle respectively at your own
                 pace. By setting ticket status you'll never loose track of your progress and be able to evaluate your efforts with greater precision.
+                <br />This app has been created with help of TypeScript, Nuxt and GraphQL.
             </p>
             <div class="mt-16 splash__button-wrapper">
                 <Button target="/login">

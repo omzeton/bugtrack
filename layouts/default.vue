@@ -45,7 +45,7 @@ body {
     width: 100vw;
     bottom: 0;
     left: 0;
-    height: 50%;
+    height: 100vh;
     z-index: -999;
     background-image: url("~assets/wave.svg");
     background-size: 100%;
