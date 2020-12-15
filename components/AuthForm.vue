@@ -5,7 +5,7 @@
                 <h2 class="text-white text-lg pt-4 font-roboto font-bold text-4xl">
                     {{ registrationForm ? "Register an Account" : "Login" }}
                 </h2>
-                <div class="input-field mt-8">
+                <div class="input-field mt-8 mb-6">
                     <label class="block">
                         <span class="text-form text-xs font-nunito">Username</span>
                         <ValidationProvider v-slot="{ errors }" rules="required">
@@ -15,14 +15,18 @@
                                 placeholder="Username"
                                 v-model="form.username"
                                 @focus="error = ''"
+                                autofocus
+                                ref="firstInput"
                             />
-                            <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
-                                {{ errors[0] }}
-                            </span>
+                            <transition name="fade">
+                                <span v-if="errors[0]" class="input-error text-red-500 font-nunito text-xs mt-2">
+                                    {{ errors[0] }}
+                                </span>
+                            </transition>
                         </ValidationProvider>
                     </label>
                 </div>
-                <div v-if="registrationForm" class="input-field mt-2">
+                <div v-if="registrationForm" class="input-field mt-2 mb-6">
                     <label class="block">
                         <span class="text-form text-xs font-nunito">Email</span>
                         <ValidationProvider v-slot="{ errors }" rules="required">
@@ -33,13 +37,15 @@
                                 v-model="form.email"
                                 @focus="error = ''"
                             />
-                            <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
-                                {{ errors[0] }}
-                            </span>
+                            <transition name="fade">
+                                <span v-if="errors[0]" class="input-error text-red-500 font-nunito text-xs mt-2">
+                                    {{ errors[0] }}
+                                </span>
+                            </transition>
                         </ValidationProvider>
                     </label>
                 </div>
-                <div class="input-field mt-2">
+                <div class="input-field mt-2 mb-6">
                     <label class="block">
                         <span class="text-form text-xs font-nunito">Password</span>
                         <ValidationProvider v-slot="{ errors }" rules="required">
@@ -50,9 +56,11 @@
                                 v-model="form.password"
                                 @focus="error = ''"
                             />
-                            <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
-                                {{ errors[0] }}
-                            </span>
+                            <transition name="fade">
+                                <span v-if="errors[0]" class="input-error text-red-500 font-nunito text-xs mt-2">
+                                    {{ errors[0] }}
+                                </span>
+                            </transition>
                         </ValidationProvider>
                     </label>
                 </div>
@@ -67,18 +75,20 @@
                                 v-model="form.retypedPassword"
                                 @focus="error = ''"
                             />
-                            <span v-if="errors[0]" class="text-red-500 font-nunito text-xs mt-2">
-                                {{ errors[0] }}
-                            </span>
+                            <transition name="fade">
+                                <span v-if="errors[0]" class="input-error text-red-500 font-nunito text-xs mt-2">
+                                    {{ errors[0] }}
+                                </span>
+                            </transition>
                         </ValidationProvider>
                     </label>
                 </div>
-                <div class="flex items-center mt-8 mb-4">
-                    <Button :callback="submit" :isLoading="loading">
+                <div class="flex items-center mt-12 mb-4">
+                    <Button :callback="submit" :isLoading="loading" type="submit">
                         Submit
                     </Button>
                     <transition name="fade">
-                        <p v-if="error" class="font-nunito bg-red-200 text-xs py-2 px-4 text-red-600 rounded ml-8 shadow-lg">{{ error }}!</p>
+                        <p v-if="error" class="font-nunito bg-red-600 text-white text-xs py-2 px-4 rounded ml-8 shadow-lg error-shadow">{{ error }}!</p>
                     </transition>
                 </div>
                 <nuxt-link class="form-link text-xs font-nunito" v-if="registrationForm" to="/login">
@@ -206,5 +216,8 @@ export default class Auth extends Vue {
 .form-link {
     color: $accent;
     text-decoration: underline;
+}
+.input-error {
+    position: absolute;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-    <div class="button accent-shadow" @click="callback">
+    <button class="button accent-shadow" @click="callback" :type="type">
         <Loader class="mt-2" v-if="isLoading" />
         <span v-else class="font-nunito font-bold text-white">
             <slot />
         </span>
-    </div>
+    </button>
 </template>
 
 <script lang="ts">
@@ -18,6 +18,7 @@ import Loader from "./Loader.vue";
 export default class Button extends Vue {
     @Prop({ default: () => {} }) callback!: () => void;
     @Prop({ default: false }) isLoading!: boolean;
+    @Prop({ default: "button" }) type!: string;
 }
 </script>
 
