@@ -8,6 +8,7 @@
             <h2 class="splash__header font-roboto">
                 Board
             </h2>
+            <Columns />
         </template>
     </div>
 </template>
@@ -15,12 +16,17 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
+import Columns from "@/components/Board/Columns.vue";
 import { namespace } from "nuxt-property-decorator";
 import { User } from "~/models/models";
 
 const api = namespace("api");
 
-@Component
+@Component({
+    components: {
+        Columns,
+    },
+})
 export default class Board extends Vue {
     @api.Action
     public FETCH_USER_DATA!: () => any;

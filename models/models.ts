@@ -30,4 +30,19 @@ interface LogInResult {
     token: string;
 }
 
-export { User, Users, HTMLForm, RegistrationForm, LoginForm, LogInResult };
+interface Task {
+    id: number;
+    title: string;
+    tag: string;
+    code: string;
+    assignee: string;
+    type: string;
+    priority: string;
+}
+
+interface Column {
+    name: string;
+    tasks: Task[];
+}
+
+export { User, Users, HTMLForm, RegistrationForm, LoginForm, LogInResult, Task, Column };
