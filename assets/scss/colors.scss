@@ -1,8 +1,12 @@
 $rubik: "Roboto", sans-serif;
 $karla: "Nunito", sans-serif;
 
-$orange: #0dff49;
-$black: #000000;
+$accent: #0dff49;
+$accent-darker: #15e241;
+$accent-lighter: #18ff78;
+$black1: #000000;
+$black2: #0e141b;
+$black3: #101821;
 $white1: #ffffff;
 $white2: #fbf8f7;
 $white3: #dddddd;
@@ -18,4 +22,20 @@ $white3: #dddddd;
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+
+.font-nunito {
+    font-family: "Nunito";
+}
+
+.font-roboto {
+    font-family: "Roboto";
+}
+
+.text-toxic {
+    color: $accent;
+}
+
+.accent-shadow {
+    box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.2);
 }

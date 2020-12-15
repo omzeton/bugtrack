@@ -1,11 +1,10 @@
 <template>
-    <div class="toolbar">
+    <div class="toolbar accent-shadow">
         <nuxt-link to="/" tag="a" class="toolbar__logo flex-wrapper">
-            <img src="~/assets/logo.png" alt="Logo" />
+            <img src="~/assets/logo.svg" alt="Logo" />
         </nuxt-link>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>
-            <nuxt-link to="/about" tag="div" class="toolbar__button flex-wrapper">About</nuxt-link>
             <div class="toolbar__divider" />
             <nuxt-link to="login" tag="div" class="toolbar__button flex-wrapper">Login</nuxt-link>
         </nav>
@@ -14,12 +13,12 @@
 
 <style lang="scss" scoped>
 .toolbar {
-    position: absolute;
+    position: fixed;
     z-index: 6;
     top: 0;
     width: 100%;
     height: 56px;
-    background: $white1;
+    background: $black2;
     display: inline-flex;
     box-sizing: border-box;
     &__logo {
@@ -52,8 +51,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        color: $white2;
         &:hover {
-            color: $orange;
+            color: $accent;
         }
     }
     &__divider {
@@ -65,7 +65,7 @@
 }
 
 .nuxt-link-exact-active {
-    box-shadow: $orange 0 0.5px 0 0, inset $orange 0 -0.5px 0 0;
-    color: $orange;
+    box-shadow: $accent 0 0.5px 0 0, inset $accent 0 -0.5px 0 0;
+    color: $accent;
 }
 </style>

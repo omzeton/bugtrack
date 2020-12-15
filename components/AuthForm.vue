@@ -189,6 +189,6 @@ export default class Auth extends Vue {
     top: 150px;
     transform: translateX(-50%);
     box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.2);
-    border: 1px solid $orange;
+    border: 1px solid $accent;
 }
 </style>

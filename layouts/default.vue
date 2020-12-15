@@ -4,6 +4,7 @@
         <main class="main">
             <Nuxt />
         </main>
+        <div class="background-image"></div>
     </div>
 </template>
 
@@ -27,10 +28,7 @@ export default class Default extends Vue {}
 body {
     margin: 0;
     padding: 0;
-    background: $white2;
-    background-image: url("~assets/tic-tac-toe.png");
-    background-repeat: repeat;
-    background-size: 40%;
+    background: $black3;
 }
 
 .main {
@@ -38,5 +36,20 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    padding: 64px;
+    box-sizing: border-box;
+}
+
+.background-image {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    z-index: -999;
+    background-image: url("~assets/wave.svg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: bottom;
 }
 </style>
