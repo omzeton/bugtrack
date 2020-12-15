@@ -1,12 +1,10 @@
 <template>
-    <div class="homescreen">
-        <template v-if="userInfo.user">
-            <h2>Welcome {{ userInfo.user.username }}!</h2>
-            <p>id: {{ userInfo.user._id }}</p>
-            <p>email: {{ userInfo.user.email }}</p>
-            <p>password: {{ userInfo.user.password }}</p>
-            <p>username: {{ userInfo.user.username }}</p>
-            <p>token: {{ userInfo.token }}</p>
+    <div class="task-board">
+        <template v-if="userData.username">
+            <h2 class="splash__header font-roboto">
+                Welcome back <span class="text-toxic">{{ userData.username }}</span
+                >.
+            </h2>
         </template>
     </div>
 </template>
@@ -17,11 +15,24 @@ import Component from "~/plugins/nuxt-class-component";
 import { namespace } from "nuxt-property-decorator";
 import { User } from "~/models/models";
 
-const user = namespace("user");
+const api = namespace("api");
 
 @Component
 export default class Board extends Vue {
-    @user.State
-    public userInfo!: object;
+    @api.Action
+    public FETCH_USER_DATA!: () => any;
+    @api.Getter
+    public userData!: any;
+
+    mounted() {
+        this.FETCH_USER_DATA();
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+.task-board {
+    width: 100%;
+    height: 100%;
+}
+</style>

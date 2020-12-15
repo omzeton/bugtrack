@@ -1,5 +1,6 @@
 import { User, LogInResult } from "../models/models";
 import { getDB } from "../api/mongo";
+import { ObjectId } from "mongodb";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -41,6 +42,18 @@ export default {
                     user,
                     token,
                 };
+            } catch (e) {
+                throw e;
+            }
+        },
+        userData: async (_root: undefined, { _id }: { _id: string }): Promise<User> => {
+            try {
+                const db = getDB();
+                const idFromObject = new ObjectId(_id);
+                const user = await db.collection("users").findOne({ _id: idFromObject });
+                if (!user) throw new Error("User with this _id could not be found");
+
+                return user;
             } catch (e) {
                 throw e;
             }
