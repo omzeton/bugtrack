@@ -74,16 +74,11 @@
                     </label>
                 </div>
                 <div class="flex items-center mt-8 mb-4">
-                    <Button :callback="submit">
+                    <Button :callback="submit" :isLoading="loading">
                         Submit
                     </Button>
                     <transition name="fade">
-                        <Loader v-if="loading" class="ml-4 mb-16" />
-                    </transition>
-                    <transition name="fade">
-                        <p v-if="error" class="font-nunito bg-red-200 py-2 px-4 text-red-600 rounded mt-6 ml-8 shadow-lg">
-                            {{ error }}
-                        </p>
+                        <p v-if="error" class="font-nunito bg-red-200 text-xs py-2 px-4 text-red-600 rounded ml-8 shadow-lg">{{ error }}!</p>
                     </transition>
                 </div>
                 <nuxt-link class="form-link text-xs font-nunito" v-if="registrationForm" to="/login">

@@ -1,6 +1,7 @@
 <template>
     <div class="button accent-shadow" @click="callback">
-        <span class="font-nunito font-bold text-white">
+        <Loader class="mt-2" v-if="isLoading" />
+        <span v-else class="font-nunito font-bold text-white">
             <slot />
         </span>
     </div>
@@ -8,9 +9,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "nuxt-property-decorator";
-@Component
+import Loader from "./Loader.vue";
+@Component({
+    components: {
+        Loader,
+    },
+})
 export default class Button extends Vue {
     @Prop({ default: () => {} }) callback!: () => void;
+    @Prop({ default: false }) isLoading!: boolean;
 }
 </script>
 
@@ -22,6 +29,7 @@ export default class Button extends Vue {
     background-color: $accent;
     min-width: 180px;
     display: flex;
+    height: 40px;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
