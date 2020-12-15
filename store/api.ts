@@ -52,6 +52,7 @@ export default class Api extends VuexModule {
                 },
             });
             Cookies.set("logged-user-id", JSON.stringify(res.data.data.logIn.user._id));
+            this.context.commit("user/updateLoggedStatus", true, { root: true });
             return res;
         } catch (error) {
             throw error;

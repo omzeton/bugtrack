@@ -1,9 +1,12 @@
 <template>
     <div class="task-board">
         <template v-if="userData">
-            <h2 class="splash__header font-roboto">
+            <h3 class="text-xs text-form">
                 Welcome back <span class="text-toxic">{{ userData.username }}</span
-                >.
+                >!
+            </h3>
+            <h2 class="splash__header font-roboto">
+                Board
             </h2>
         </template>
     </div>

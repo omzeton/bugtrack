@@ -6,10 +6,32 @@
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>
             <div class="toolbar__divider" />
-            <nuxt-link to="login" tag="div" class="toolbar__button flex-wrapper">Login</nuxt-link>
+            <div v-if="isLoggedIn" @click="logOut" class="toolbar__button flex-wrapper">Logout</div>
+            <nuxt-link v-else to="/login" tag="div" class="toolbar__button flex-wrapper">Login</nuxt-link>
         </nav>
     </div>
 </template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "~/plugins/nuxt-class-component";
+import { namespace } from "nuxt-property-decorator";
+
+const user = namespace("user");
+
+@Component
+export default class Toolbar extends Vue {
+    @user.Getter
+    public isLoggedIn!: boolean;
+    @user.Action
+    public LOGOUT!: () => void;
+
+    logOut(): void {
+        this.LOGOUT();
+        this.$router.push("/");
+    }
+}
+</script>
 
 <style lang="scss" scoped>
 .toolbar {
