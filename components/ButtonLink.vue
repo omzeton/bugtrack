@@ -1,16 +1,16 @@
 <template>
-    <div class="button accent-shadow" @click="callback">
+    <nuxt-link class="button accent-shadow" :to="target">
         <span class="font-nunito font-bold text-white">
             <slot />
         </span>
-    </div>
+    </nuxt-link>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "nuxt-property-decorator";
 @Component
 export default class Button extends Vue {
-    @Prop({ default: () => {} }) callback!: () => void;
+    @Prop({ default: "" }) target!: string | undefined;
 }
 </script>
 

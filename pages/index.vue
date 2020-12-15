@@ -8,12 +8,12 @@
                 <br />This app has been created with help of TypeScript, Nuxt and GraphQL.
             </p>
             <div class="mt-16 splash__button-wrapper">
-                <Button target="/login">
+                <ButtonLink target="/login">
                     Login
-                </Button>
-                <Button target="/register">
+                </ButtonLink>
+                <ButtonLink target="/register">
                     Register
-                </Button>
+                </ButtonLink>
             </div>
         </div>
     </div>
@@ -22,11 +22,11 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
-import Button from "@/components/Button.vue";
+import ButtonLink from "@/components/ButtonLink.vue";
 
 @Component({
     components: {
-        Button,
+        ButtonLink,
     },
 })
 export default class IndexPage extends Vue {}
