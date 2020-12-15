@@ -39,10 +39,10 @@ export default class Button extends Vue {
     transition: background-color 0.2s ease-in-out;
     outline: none;
     &:focus {
-        border: 1px solid $accent-darker;
+        opacity: 0.7;
     }
     &:hover {
-        background-color: $accent-darker;
+        opacity: 0.7;
     }
 }
 </style>

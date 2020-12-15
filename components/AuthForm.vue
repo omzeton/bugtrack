@@ -1,5 +1,5 @@
 <template>
-    <div class="signup-card">
+    <div class="signup-card accent-shadow">
         <ValidationObserver ref="observer">
             <form class="p-8" action="">
                 <h2 class="text-white text-lg pt-4 font-roboto font-bold text-4xl">
@@ -11,7 +11,7 @@
                         <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="text"
-                                class="form-input text-sm font-nunito mt-1 block w-full px-0 py-2 pl-2 border-box"
+                                class="form-input accent-shadow-focus text-sm font-nunito mt-1 block w-full px-0 py-2 pl-2 border-box"
                                 placeholder="Username"
                                 v-model="form.username"
                                 @focus="error = ''"
@@ -32,7 +32,7 @@
                         <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="email"
-                                class="form-input text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
+                                class="form-input accent-shadow-focus text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Email"
                                 v-model="form.email"
                                 @focus="error = ''"
@@ -51,7 +51,7 @@
                         <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="password"
-                                class="form-input text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
+                                class="form-input accent-shadow-focus text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Password"
                                 v-model="form.password"
                                 @focus="error = ''"
@@ -70,7 +70,7 @@
                         <ValidationProvider v-slot="{ errors }" rules="required">
                             <input
                                 type="password"
-                                class="form-input text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
+                                class="form-input accent-shadow-focus text-sm font-nunito mt-1 px-0 py-2 pl-2 block w-full border-box"
                                 placeholder="Repeat password"
                                 v-model="form.retypedPassword"
                                 @focus="error = ''"
@@ -197,7 +197,6 @@ export default class Auth extends Vue {
     left: 50%;
     top: 150px;
     transform: translateX(-50%);
-    box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.2);
     border: 1px solid $accent;
     background-color: $black3;
     border-radius: 6px;
@@ -210,7 +209,6 @@ export default class Auth extends Vue {
     outline: none;
     &:focus {
         border-color: $accent;
-        box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.2);
     }
 }
 .form-link {

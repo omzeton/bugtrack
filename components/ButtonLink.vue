@@ -29,7 +29,7 @@ export default class Button extends Vue {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     &:hover {
-        background-color: $accent-darker;
+        opacity: 0.7;
     }
 }
 </style>
