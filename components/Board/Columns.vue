@@ -62,7 +62,6 @@ export default class Columns extends Vue {
         try {
             const userData = await this.FETCH_USER_DATA();
             this.tasks = userData.data.data.userData.tasks;
-            console.log(this.tasks);
         } catch (e) {
             throw e;
         }

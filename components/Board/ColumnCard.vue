@@ -23,10 +23,6 @@ import { Task, Column } from "~/models/models";
 @Component
 export default class ColumnCard extends Vue {
     @Prop() cardData!: Task;
-
-    mounted() {
-        console.log(this.cardData);
-    }
 }
 </script>
 
