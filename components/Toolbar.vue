@@ -4,7 +4,7 @@
             <img src="~/assets/logo.svg" alt="Logo" />
         </nuxt-link>
         <div class="todo">
-            <p class="text-accent font-roboto">2. Card style 3. Add new card button 4. Modal</p>
+            <p class="text-accent font-roboto">4. Modal</p>
         </div>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>

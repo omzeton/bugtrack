@@ -1,5 +1,5 @@
 <template>
-    <div class="columns mt-16">
+    <div class="columns mt-8">
         <div class="columns__wrapper">
             <div v-for="(column, index) in columnLabels" :key="index" class="column mr-12 p-4">
                 <h2 class="font-nunito font-hairline text-white mb-4">
@@ -112,7 +112,7 @@ export default class Columns extends Vue {
 <style lang="scss" scoped>
 .columns {
     width: 100%;
-    height: calc(100vh - 350px);
+    height: calc(100vh - 400px);
     overflow-y: hidden;
     overflow-x: hidden;
     &__wrapper {
