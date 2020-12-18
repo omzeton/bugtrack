@@ -2,7 +2,7 @@
     <div class="task-board">
         <template v-if="userData">
             <h3 class="text-xs text-form">
-                Welcome back <span class="text-toxic">{{ userData.username }}</span
+                Welcome back <span class="text-accent">{{ userData.username }}</span
                 >!
             </h3>
             <h2 class="splash__header font-roboto">

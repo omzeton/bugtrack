@@ -6,9 +6,10 @@ module.exports = {
                 roboto: ["Roboto"],
                 nunito: ["Nunito"],
             },
-        },
-        colors: {
-            "super-green": "#0dff49",
+            colors: {
+                accent: "#0dff49",
+                form: "#56606b",
+            },
         },
     },
 };

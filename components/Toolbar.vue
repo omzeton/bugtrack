@@ -3,6 +3,9 @@
         <nuxt-link to="/" tag="a" class="toolbar__logo flex-wrapper">
             <img src="~/assets/logo.svg" alt="Logo" />
         </nuxt-link>
+        <div class="todo">
+            <p class="text-accent font-roboto">2. Card style 3. Add new card button 4. Modal</p>
+        </div>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>
             <div class="toolbar__divider" />
@@ -89,5 +92,12 @@ export default class Toolbar extends Vue {
 .nuxt-link-exact-active {
     box-shadow: $accent 0 0.5px 0 0, inset $accent 0 -0.5px 0 0;
     color: $accent;
+}
+
+.todo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 200px;
 }
 </style>
