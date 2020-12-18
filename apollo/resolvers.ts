@@ -92,6 +92,7 @@ export default {
                                 name,
                                 category,
                                 description,
+                                status: 0,
                             },
                         },
                     }

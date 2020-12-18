@@ -1,7 +1,6 @@
 <template>
     <transition name="fade">
-        <!-- <div class="modal" v-if="modalIsVisible"> -->
-        <div class="modal" v-if="true">
+        <div class="modal" v-if="modalIsVisible">
             <div class="modal__box">
                 <div class="modal__close-btn cursor-pointer" @click="closeModal">
                     <svg

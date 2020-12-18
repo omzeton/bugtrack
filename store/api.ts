@@ -69,6 +69,12 @@ export default class Api extends VuexModule {
                             username
                             password
                             email
+                            tasks {
+                                name
+                                category
+                                description
+                                status
+                            }
                         }
                     }
                 `,

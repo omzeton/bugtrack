@@ -31,13 +31,10 @@ interface LogInResult {
 }
 
 interface Task {
-    id: number;
-    title: string;
-    tag: string;
-    code: string;
-    assignee: string;
-    type: string;
-    priority: string;
+    name: string;
+    category: string;
+    description: string;
+    status: number;
 }
 
 interface Column {

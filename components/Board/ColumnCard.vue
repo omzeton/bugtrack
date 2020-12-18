@@ -1,17 +1,17 @@
 <template>
     <div v-if="cardData" class="column-card mb-4 p-4 box-border cursor-pointer bg-black2 hover:bg-black3">
         <div class="column-card__title">
-            <h2 class="text-white font-roboto text-xl font-bold mb-2">{{ cardData.title }}</h2>
+            <h2 class="text-white font-roboto text-xl font-bold mb-2">{{ cardData.name }}</h2>
         </div>
         <div class="column-card__tag mt-2 mb-12">
-            <p class="column-card__tag-label px-4 text-sm text-white">{{ cardData.tag }}</p>
+            <p class="column-card__tag-label px-4 text-sm text-white">{{ cardData.category }}</p>
         </div>
         <div class="column-card__description mb-6">
-            <p class="text-nunito font-light text-white text-sm leading-6">test test test test test test test test tes ttes tet sat sdf asdf asdf</p>
+            <p class="text-nunito font-light text-white text-sm leading-6">{{ cardData.description }}</p>
         </div>
         <div class="column-card__bottom-section px-4 box-border">
             <div class="column-card__code">
-                <p class="text-form font-nunito text-xs font-hairline">{{ cardData.code }}</p>
+                <p class="text-form font-nunito text-xs font-hairline">{{ cardData.status }}</p>
             </div>
         </div>
     </div>
@@ -23,6 +23,10 @@ import { Task, Column } from "~/models/models";
 @Component
 export default class ColumnCard extends Vue {
     @Prop() cardData!: Task;
+
+    mounted() {
+        console.log(this.cardData);
+    }
 }
 </script>
 

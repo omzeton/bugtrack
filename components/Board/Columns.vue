@@ -1,12 +1,12 @@
 <template>
     <div class="columns mt-8">
         <div class="columns__wrapper">
-            <div v-for="(column, index) in columnLabels" :key="index" class="column mr-12 p-4">
+            <div v-for="(column, index) in columns" :key="index" class="column mr-12 p-4">
                 <h2 class="font-nunito font-hairline text-white mb-4">
-                    {{ column.name }} <span class="ml-1 font-roboto font-bold text-form">{{ column.tasks.length }}</span>
+                    {{ column.name }} <span class="ml-1 font-roboto font-bold text-form">{{ taskPerStatus(column.statusId).length }}</span>
                 </h2>
-                <div class="columns__ticker-wrapper">
-                    <ColumnCard v-for="task in column.tasks" :key="task.id" :cardData="task" />
+                <div class="columns__ticker-wrapper" v-if="tasks">
+                    <ColumnCard v-for="(task, index) in taskPerStatus(column.statusId)" :key="index" :cardData="task" />
                 </div>
             </div>
         </div>
@@ -14,98 +14,64 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "nuxt-property-decorator";
+import { Vue, Component, namespace } from "nuxt-property-decorator";
 import ColumnCard from "./ColumnCard.vue";
-import { Task, Column } from "~/models/models";
+
+const api = namespace("api");
+
+interface Task {
+    category: number;
+    description: string;
+    name: string;
+    status: number;
+}
+
+interface Column {
+    statusId: number;
+    name: string;
+}
 
 @Component
 export default class Columns extends Vue {
-    columnLabels: Column[] = [
+    @api.Action
+    FETCH_USER_DATA!: () => any;
+    @api.Getter
+    GET_USER_DATA!: any;
+
+    columns: Column[] = [
         {
+            statusId: 0,
             name: "TO DO",
-            tasks: [
-                {
-                    id: 1,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-            ],
         },
         {
+            statusId: 1,
             name: "IN PROGRESS",
-            tasks: [
-                {
-                    id: 2,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-                {
-                    id: 3,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-            ],
         },
         {
-            name: "CODE REVIEW",
-            tasks: [
-                {
-                    id: 4,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-            ],
+            statusId: 2,
+            name: "TESTING",
         },
         {
+            statusId: 3,
             name: "DONE",
-            tasks: [
-                {
-                    id: 5,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-                {
-                    id: 6,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-                {
-                    id: 7,
-                    title: "Kupić więcej lampek na choinkę",
-                    tag: "URLOP",
-                    code: "W-CA-01",
-                    assignee: "Adam Rolczyk",
-                    type: "task",
-                    priority: "high",
-                },
-            ],
         },
     ];
+    tasks: Task[] = [];
+
+    async mounted() {
+        try {
+            const userData = await this.FETCH_USER_DATA();
+            this.tasks = userData.data.data.userData.tasks;
+            console.log(this.tasks);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    taskPerStatus(taskStatus: number) {
+        const result = this.tasks.filter(el => el.status === taskStatus);
+        return result;
+    }
 }
 </script>
 
