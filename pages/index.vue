@@ -1,20 +1,19 @@
 <template>
     <div class="homepage">
-        <div class="homepage-card">
-            <img class="homepage-card__image" src="~/assets/logo.png" alt="Logo" />
-            <div class="flex">
-                <nuxt-link
-                    to="/login"
-                    class="font-roboto mx-8 signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
-                >
+        <div class="splash mt-32">
+            <h2 class="splash__header font-roboto">Best way<br />to <span class="text-toxic">manage</span> your next project</h2>
+            <p class="splash__sub font-nunito mt-8 font-light text-sm text-white">
+                A tool to help you work smarter! BugTrack is app that lets you segregate all your tasks and problems into small chunks that you can tackle respectively at your own pace. By setting
+                ticket status you'll never loose track of your progress and be able to evaluate your efforts with greater precision.
+                <br />This app has been created with help of TypeScript, Nuxt and GraphQL.
+            </p>
+            <div class="mt-16 splash__button-wrapper">
+                <ButtonLink target="/login">
                     Login
-                </nuxt-link>
-                <nuxt-link
-                    to="/register"
-                    class="font-roboto mx-8 signup-card__submit mt-6 bg-green-200 hover:bg-green-300 hover:text-black focus:outline-none py-2 px-4 rounded text-gray-600"
-                >
+                </ButtonLink>
+                <ButtonLink target="/register">
                     Register
-                </nuxt-link>
+                </ButtonLink>
             </div>
         </div>
     </div>
@@ -23,65 +22,31 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
+import ButtonLink from "@/components/ButtonLink.vue";
 
-@Component
+@Component({
+    components: {
+        ButtonLink,
+    },
+})
 export default class IndexPage extends Vue {}
 </script>
 
 <style lang="scss">
-.homepage {
-    width: 100%;
-    height: calc(100vh - 56px);
-    position: relative;
-}
-
-.homepage-card {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 500px;
-    height: auto;
-    background-color: $white1;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 150px;
-    padding: 32px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    box-shadow: 0px 0px 23px -1px rgba(13, 255, 73, 0.1);
-
-    &__image {
-        width: 100%;
-        height: auto;
+.splash {
+    &__header {
+        font-size: 64px;
+        color: $white2;
+        font-weight: 900;
+        line-height: 1.2;
     }
-    &__text {
-        font-family: $karla;
-        text-align: justify;
-        letter-spacing: 1px;
-        font-size: 16px;
+    &__sub {
+        width: 400px;
     }
-
-    &__buttons {
-        width: 100%;
-        height: auto;
-        margin-top: 32px;
-    }
-    &__button {
-        border: none;
-        width: 50%;
-        margin: 0 8px;
-        height: 32px;
-        border-radius: 8px;
-        background-color: $black;
-        font-family: $rubik;
-        color: $white1;
-        box-shadow: 0px 10px 13px -1px rgba(255, 127, 17, 0.1);
-        text-decoration: none;
-        &:hover {
-            background-color: $orange;
-            cursor: pointer;
-        }
+    &__button-wrapper {
+        width: 400px;
+        display: flex;
+        justify-content: space-between;
     }
 }
 </style>

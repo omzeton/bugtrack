@@ -1,4 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
+import Cookies from "js-cookie";
 
 interface TestUserData {
     _id: string;
@@ -13,7 +14,6 @@ interface TestUserData {
     namespaced: true,
 })
 export default class User extends VuexModule {
-    public isLoggedIn: boolean = false;
     public userInfo: TestUserData = {
         _id: "",
         email: "",
@@ -21,14 +21,26 @@ export default class User extends VuexModule {
         username: "",
         token: "",
     };
+    public userIsLoggedIn: boolean = false;
 
-    get IS_LOGGED_IN(): boolean {
-        return this.isLoggedIn;
+    get isLoggedIn(): boolean {
+        return this.userIsLoggedIn;
+    }
+
+    @Action({ rawError: true })
+    LOGOUT() {
+        Cookies.remove("logged-user-id");
+        this.context.commit("updateLoggedStatus", false);
     }
 
     // Just for testing purposes
     @Mutation
-    public updateUserInfo(data: TestUserData) {
-        this.userInfo = { ...data };
+    public updateUserInfo(payload: TestUserData) {
+        this.userInfo = { ...payload };
+    }
+
+    @Mutation
+    public updateLoggedStatus(payload: boolean) {
+        this.userIsLoggedIn = payload;
     }
 }

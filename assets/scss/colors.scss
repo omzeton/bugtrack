@@ -1,11 +1,15 @@
 $rubik: "Roboto", sans-serif;
 $karla: "Nunito", sans-serif;
 
-$orange: #0dff49;
-$black: #000000;
+$accent: #0dff49;
+$accent-rgb: rgba(13, 255, 73, 0.3);
+$black1: #000000;
+$black2: #0e141b;
+$black3: #101821;
 $white1: #ffffff;
 $white2: #fbf8f7;
 $white3: #dddddd;
+$formWhite: #56606b;
 
 .border-box {
     box-sizing: border-box;
@@ -18,4 +22,16 @@ $white3: #dddddd;
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+
+.accent-shadow {
+    box-shadow: 0px 0px 23px -1px $accent-rgb;
+}
+
+.accent-shadow-focus:focus {
+    box-shadow: 0px 0px 23px -1px $accent-rgb;
+}
+
+.error-shadow {
+    box-shadow: 0px 0px 13px -1px #e53e3e;
 }

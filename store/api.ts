@@ -1,5 +1,6 @@
-import { Module, VuexModule, Action } from "vuex-module-decorators";
+import { Module, VuexModule, Action, Mutation } from "vuex-module-decorators";
 import { RegistrationForm, LoginForm } from "../models/models";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 @Module({
@@ -7,6 +8,8 @@ import axios from "axios";
     namespaced: true,
 })
 export default class Api extends VuexModule {
+    public userInformation: any = {};
+
     @Action({ rawError: true })
     public async REGISTER_USER({ username, email, password }: RegistrationForm) {
         try {
@@ -39,11 +42,7 @@ export default class Api extends VuexModule {
                         logIn(username:$username, password:$password) {
                             user {
                                 _id
-                                username
-                                password
-                                email
                             }
-                            token
                         }
                     }
                 `,
@@ -52,9 +51,49 @@ export default class Api extends VuexModule {
                     password,
                 },
             });
+            Cookies.set("logged-user-id", JSON.stringify(res.data.data.logIn.user._id));
+            this.context.commit("user/updateLoggedStatus", true, { root: true });
             return res;
         } catch (error) {
             throw error;
         }
+    }
+    @Action({ rawError: true })
+    public async FETCH_USER_DATA(_id: any) {
+        try {
+            const cookieId = _id ? _id._id : JSON.parse(Cookies.get("logged-user-id"));
+            const res = await axios.post("http://localhost:4000/graphql", {
+                query: `
+                    query($_id:ID!) {
+                        userData(_id: $_id) {
+                            username
+                            password
+                            email
+                            tasks {
+                                name
+                                category
+                                description
+                                status
+                            }
+                        }
+                    }
+                `,
+                variables: {
+                    _id: cookieId,
+                },
+            });
+            this.context.commit("updateUserInformation", res.data.data.userData);
+            return res;
+        } catch (error) {
+            throw error;
+        }
+    }
+    @Mutation
+    public updateUserInformation(data: any) {
+        this.userInformation = data;
+    }
+
+    get GET_USER_DATA() {
+        return this.userInformation;
     }
 }

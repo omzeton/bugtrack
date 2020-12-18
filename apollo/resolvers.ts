@@ -1,5 +1,6 @@
 import { User, LogInResult } from "../models/models";
 import { getDB } from "../api/mongo";
+import { ObjectId } from "mongodb";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -45,6 +46,18 @@ export default {
                 throw e;
             }
         },
+        userData: async (_root: undefined, { _id }: { _id: string }): Promise<User> => {
+            try {
+                const db = getDB();
+                const idFromObject = new ObjectId(_id);
+                const user = await db.collection("users").findOne({ _id: idFromObject });
+                if (!user) throw new Error("User with this _id could not be found");
+
+                return user;
+            } catch (e) {
+                throw e;
+            }
+        },
     },
     Mutation: {
         registerUser: async (_root: undefined, { username, password, email }: { username: string; password: string; email: string }): Promise<User | string> => {
@@ -63,6 +76,28 @@ export default {
                 const hashedPassword = await bcrypt.hash(password, 12);
                 const newUser = await db.collection("users").insertOne({ username, password: hashedPassword, email });
                 return newUser.ops[0];
+            } catch (e) {
+                throw e;
+            }
+        },
+        addNewTask: async (_root: undefined, { _id, name, category, description }: { _id: string; name: string; category: string; description: string }): Promise<any> => {
+            try {
+                const db = getDB();
+                const userId = new ObjectId(_id);
+                const result = await db.collection("users").updateOne(
+                    { _id: userId },
+                    {
+                        $push: {
+                            tasks: {
+                                name,
+                                category,
+                                description,
+                                status: 0,
+                            },
+                        },
+                    }
+                );
+                return result;
             } catch (e) {
                 throw e;
             }
