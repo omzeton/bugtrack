@@ -68,9 +68,7 @@ export default class Columns extends Vue {
     }
 
     taskPerStatus(taskStatus: number) {
-        console.log({ tasks: this.tasks });
         const result = this.tasks.filter(el => el.status === taskStatus);
-        console.log({ result });
         return result;
     }
 }

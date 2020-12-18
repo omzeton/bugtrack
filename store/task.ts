@@ -38,7 +38,6 @@ export default class Api extends VuexModule {
                     status: parseInt(status),
                 },
             });
-            console.log({ res });
             return res;
         } catch (error) {
             throw error;
