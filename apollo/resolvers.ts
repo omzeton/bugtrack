@@ -80,5 +80,26 @@ export default {
                 throw e;
             }
         },
+        addNewTask: async (_root: undefined, { _id, name, category, description }: { _id: string; name: string; category: string; description: string }): Promise<any> => {
+            try {
+                const db = getDB();
+                const userId = new ObjectId(_id);
+                const result = await db.collection("users").updateOne(
+                    { _id: userId },
+                    {
+                        $push: {
+                            tasks: {
+                                name,
+                                category,
+                                description,
+                            },
+                        },
+                    }
+                );
+                return result;
+            } catch (e) {
+                throw e;
+            }
+        },
     },
 };
