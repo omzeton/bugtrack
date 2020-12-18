@@ -80,10 +80,16 @@ export default {
                 throw e;
             }
         },
-        addNewTask: async (_root: undefined, { _id, name, category, description }: { _id: string; name: string; category: string; description: string }): Promise<any> => {
+        addNewTask: async (_root: undefined, { _id, name, category, description, status }: { _id: string; name: string; category: string; description: string; status: number }): Promise<any> => {
             try {
                 const db = getDB();
                 const userId = new ObjectId(_id);
+                console.log({
+                    name,
+                    category,
+                    description,
+                    status,
+                });
                 const result = await db.collection("users").updateOne(
                     { _id: userId },
                     {
@@ -92,7 +98,7 @@ export default {
                                 name,
                                 category,
                                 description,
-                                status: 0,
+                                status,
                             },
                         },
                     }

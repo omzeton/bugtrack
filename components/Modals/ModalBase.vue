@@ -31,7 +31,9 @@
                         </g>
                     </svg>
                 </div>
-                <slot />
+                <div class="content p-8 box-border">
+                    <slot />
+                </div>
             </div>
         </div>
     </transition>
@@ -116,5 +118,9 @@ export default class Modal extends Vue {
             height: auto;
         }
     }
+}
+.content {
+    width: 100%;
+    height: 100%;
 }
 </style>

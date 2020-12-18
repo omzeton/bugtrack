@@ -1,18 +1,10 @@
 <template>
     <ModalBase :modalName="modalName">
         <div class="task-form mt-32">
-            <label for="task-name">
-                Task name
-            </label>
-            <input v-model="taskForm.name" class="mb-8" type="text" name="task-name" placeholder="Task name" />
-            <label for="task-name">
-                Task category
-            </label>
-            <input v-model="taskForm.category" class="mb-8" type="text" name="task-category" placeholder="Task category" />
-            <label for="task-category">
-                Description
-            </label>
-            <textarea v-model="taskForm.description" class="mb-32" type="text" name="task-description" placeholder="Describe what needs to be done" />
+            <Input v-model="taskForm.name" name="task-name" label="Name" type="text" placeholder="What is your task title?" wrapperClass="mb-12" :value="taskForm.name" />
+            <Input v-model="taskForm.category" name="task-category" label="Category" type="text" placeholder="What is the category of your task?" wrapperClass="mb-12" :value="taskForm.name" />
+            <Input v-model="taskForm.description" name="task-description" label="Description" type="text" placeholder="What is the task description?" wrapperClass="mb-12" :value="taskForm.name" />
+            <Input v-model="taskForm.status" name="task-status" label="Status" type="number" min="1" max="4" placeholder="What is the task status?" wrapperClass="mb-64" :value="taskForm.name" />
         </div>
         <div class="submit-bar">
             <button class="submit-bar__button bg-accent px-4 font-roboto text-white accent-shadow accent-shadow-focus" @click="submitTask">Submit</button>
@@ -22,6 +14,7 @@
 
 <script lang="ts">
 import { Vue, Component, namespace } from "nuxt-property-decorator";
+import Input from "../Input.vue";
 import ModalBase from "./ModalBase.vue";
 
 const task = namespace("task");
@@ -31,11 +24,13 @@ interface TaskForm {
     name: string;
     category: string;
     description: string;
+    status: number;
 }
 
 @Component({
     components: {
         ModalBase,
+        Input,
     },
 })
 export default class TaskModal extends Vue {
@@ -43,6 +38,7 @@ export default class TaskModal extends Vue {
         name: "",
         category: "",
         description: "",
+        status: 1,
     };
     modalName: string = "taskModal";
 
@@ -56,6 +52,7 @@ export default class TaskModal extends Vue {
             name: this.taskForm.name,
             category: this.taskForm.category,
             description: this.taskForm.description,
+            status: this.taskForm.status,
         });
         this.HIDE_MODAL({
             modalName: this.modalName,
@@ -83,5 +80,6 @@ export default class TaskModal extends Vue {
 .task-form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 </style>

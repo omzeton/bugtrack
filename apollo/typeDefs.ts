@@ -26,6 +26,7 @@ export default gql`
         name: String
         category: String
         description: String
+        status: Int
     }
 
     type Query {
@@ -36,6 +37,6 @@ export default gql`
 
     type Mutation {
         registerUser(username: String!, password: String!, email: String!): User
-        addNewTask(_id: ID!, name: String!, category: String, description: String): TaskAndUserID
+        addNewTask(_id: ID!, name: String!, category: String, description: String, status: Int!): TaskAndUserID
     }
 `;

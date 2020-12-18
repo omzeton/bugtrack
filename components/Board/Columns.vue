@@ -40,19 +40,19 @@ export default class Columns extends Vue {
 
     columns: Column[] = [
         {
-            statusId: 0,
+            statusId: 1,
             name: "TO DO",
         },
         {
-            statusId: 1,
+            statusId: 2,
             name: "IN PROGRESS",
         },
         {
-            statusId: 2,
+            statusId: 3,
             name: "TESTING",
         },
         {
-            statusId: 3,
+            statusId: 4,
             name: "DONE",
         },
     ];
@@ -68,7 +68,9 @@ export default class Columns extends Vue {
     }
 
     taskPerStatus(taskStatus: number) {
+        console.log({ tasks: this.tasks });
         const result = this.tasks.filter(el => el.status === taskStatus);
+        console.log({ result });
         return result;
     }
 }
