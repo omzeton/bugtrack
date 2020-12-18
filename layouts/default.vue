@@ -4,17 +4,20 @@
         <main class="main">
             <Nuxt />
         </main>
+        <TaskModal />
         <div class="background-image"></div>
     </div>
 </template>
 
 <script lang="ts">
 import Toolbar from "@/components/Toolbar.vue";
+import TaskModal from "@/components/Modals/TaskModal.vue";
 import { Component, Vue } from "nuxt-property-decorator";
 
 @Component({
     components: {
         Toolbar,
+        TaskModal,
     },
 })
 export default class Default extends Vue {}

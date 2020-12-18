@@ -9,7 +9,7 @@
                 Board
             </h2>
             <div class="task-board__tools mt-8">
-                <button class="task-board__add box-border pl-4 pr-6 bg-black2">
+                <button class="task-board__add box-border pl-4 pr-6 bg-black2" @click="openTaskModal">
                     <svg
                         xmlns:dc="http://purl.org/dc/elements/1.1/"
                         xmlns:cc="http://creativecommons.org/ns#"
@@ -53,6 +53,7 @@ import { namespace } from "nuxt-property-decorator";
 import { User } from "~/models/models";
 
 const api = namespace("api");
+const modals = namespace("modals");
 
 @Component({
     components: {
@@ -62,6 +63,8 @@ const api = namespace("api");
 export default class Board extends Vue {
     @api.Action
     public FETCH_USER_DATA!: () => any;
+    @modals.Action
+    public SHOW_MODAL!: ({ modalName, modalData }: { modalName: string; modalData: any }) => void;
     @api.Getter
     public GET_USER_DATA!: any;
 
@@ -88,6 +91,13 @@ export default class Board extends Vue {
         } catch (error) {
             throw error;
         }
+    }
+
+    openTaskModal(): void {
+        this.SHOW_MODAL({
+            modalName: "taskModal",
+            modalData: "nothing",
+        });
     }
 }
 </script>
