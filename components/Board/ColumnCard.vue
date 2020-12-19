@@ -4,7 +4,7 @@
             <h2 class="text-white font-roboto text-xl font-bold mb-2">{{ cardData.name }}</h2>
         </div>
         <div class="column-card__tag mt-2 mb-12">
-            <p class="column-card__tag-label px-4 text-sm text-white">{{ cardData.category }}</p>
+            <p class="column-card__tag-label px-4 text-sm text-white" :class="`column-card__tag-label${label(cardData.category)}`">{{ cardData.category }}</p>
         </div>
         <div class="column-card__description mb-6">
             <p class="text-nunito font-light text-white text-sm leading-6">{{ cardData.description }}</p>
@@ -23,6 +23,23 @@ import { Task, Column } from "~/models/models";
 @Component
 export default class ColumnCard extends Vue {
     @Prop() cardData!: Task;
+
+    label(labelString: string) {
+        switch (labelString) {
+            case "Pijaństwo":
+                return "--brown";
+                break;
+            case "Muzyka":
+                return "--blue";
+                break;
+            case "Urlop":
+                return "--green";
+                break;
+            default:
+                return "--default";
+                break;
+        }
+    }
 }
 </script>
 
@@ -41,10 +58,24 @@ export default class ColumnCard extends Vue {
         position: relative;
         &-label {
             position: absolute;
-            background: orange;
             width: auto;
             border-radius: 8px;
-            box-shadow: 0px 0px 13px -1px orange;
+            &--brown {
+                background: brown;
+                box-shadow: 0px 0px 13px -1px brown;
+            }
+            &--blue {
+                background: blue;
+                box-shadow: 0px 0px 13px -1px blue;
+            }
+            &--green {
+                background: green;
+                box-shadow: 0px 0px 13px -1px green;
+            }
+            &--default {
+                background: rebeccapurple;
+                box-shadow: 0px 0px 13px -1px rebeccapurple;
+            }
         }
     }
     &__bottom-section {
