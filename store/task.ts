@@ -37,6 +37,16 @@ export default class Api extends VuexModule {
                     status: parseInt(status),
                 },
             });
+            this.context.commit(
+                "user/pushNewTaskToArr",
+                {
+                    name,
+                    category,
+                    description,
+                    status: parseInt(status),
+                },
+                { root: true }
+            );
             return res;
         } catch (error) {
             throw error;

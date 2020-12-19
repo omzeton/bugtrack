@@ -8,14 +8,14 @@ import axios from "axios";
     namespaced: true,
 })
 export default class User extends VuexModule {
-    public userInfo: models.User = {
+    userInfo: models.User = {
         _id: "",
         email: "",
         password: "",
         username: "",
         tasks: [],
     };
-    public loggedIn: boolean = false;
+    loggedIn: boolean = false;
 
     get isLoggedIn(): boolean {
         return this.loggedIn;
@@ -30,7 +30,7 @@ export default class User extends VuexModule {
         this.context.commit("updateLoggedStatus", false);
     }
     @Action({ rawError: true })
-    public async FETCH_USER_DATA(): Promise<models.User> {
+    async FETCH_USER_DATA(): Promise<models.User> {
         try {
             const cookieId = JSON.parse(Cookies.get("logged-user-id"));
             const res = await axios.post("http://localhost:4000/graphql", {
@@ -61,12 +61,15 @@ export default class User extends VuexModule {
     }
 
     @Mutation
-    public updateUserInfo(payload: models.User) {
+    updateUserInfo(payload: models.User) {
         this.userInfo = { ...payload };
     }
-
     @Mutation
-    public updateLoggedStatus(payload: boolean) {
+    updateLoggedStatus(payload: boolean) {
         this.loggedIn = payload;
+    }
+    @Mutation
+    pushNewTaskToArr(payload: models.Task) {
+        this.userInfo.tasks.push(payload);
     }
 }

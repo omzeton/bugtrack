@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
         <div class="modal" v-if="modalIsVisible">
-            <div class="modal__box">
+            <div class="modal__box bg-black2">
                 <div class="modal__close-btn cursor-pointer" @click="closeModal">
                     <svg
                         xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -88,7 +88,6 @@ export default class Modal extends Vue {
     &__box {
         width: 50%;
         height: auto;
-        background: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
