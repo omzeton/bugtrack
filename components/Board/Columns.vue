@@ -5,8 +5,10 @@
                 <h2 class="font-nunito font-hairline text-white mb-4">
                     {{ column.name }} <span class="ml-1 font-roboto font-bold text-form">{{ taskPerStatus(column.statusId).length }}</span>
                 </h2>
-                <div class="columns__ticker-wrapper" v-if="tasks">
-                    <ColumnCard v-for="(task, index) in taskPerStatus(column.statusId)" :key="index" :cardData="task" />
+                <div class="columns__tickets-scroll-wrapper">
+                    <div class="columns__ticker-wrapper" v-if="tasks">
+                        <ColumnCard v-for="(task, index) in taskPerStatus(column.statusId)" :key="index" :cardData="task" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,6 +86,14 @@ export default class Columns extends Vue {
         align-items: flex-start;
         justify-content: space-between;
     }
+    &__tickets-scroll-wrapper {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: calc(100vh - 480px);
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 }
 
 .column {
@@ -95,6 +105,8 @@ export default class Columns extends Vue {
     box-sizing: border-box;
     border: 1px solid $black3;
     &__ticker-wrapper {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
