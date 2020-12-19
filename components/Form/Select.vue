@@ -1,9 +1,9 @@
 <template>
-    <div class="input py-2" :class="wrapperClass">
-        <label :for="name" class="font-nunito test-black2 pl-4 text-sm pb-1">
+    <div class="input py-2 bg-black3" :class="wrapperClass">
+        <label :for="name" class="font-nunito text-white pl-4 text-sm pb-1">
             {{ label }}
         </label>
-        <select class="font-roboto pl-4" :name="name" v-model="innerModel" @input="emitValue($event)">
+        <select class="font-roboto bg-black3 text-white mx-4" :name="name" v-model="innerModel" @input="emitValue($event)">
             <option disabled value="">{{ placeholder }}</option>
             <option v-for="(option, index) in options" :key="index" :value="option">{{ option }}</option>
         </select>
@@ -38,14 +38,12 @@ export default class Input extends Vue {
 
 <style lang="scss" scoped>
 .input {
-    background-color: red;
     width: 100%;
     height: 50px;
     display: flex;
     flex-direction: column;
-    border: 1px solid $black2;
+    border: 1px solid $formWhite;
     border-radius: 6px;
-    background-color: $white1;
     input {
         outline: none;
     }

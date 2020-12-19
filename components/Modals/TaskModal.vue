@@ -12,7 +12,7 @@
                 :value="taskForm.category"
             />
             <Input v-model="taskForm.description" name="task-description" label="Description" type="text" placeholder="What is the task description?" wrapperClass="mb-12" />
-            <Input v-model="taskForm.status" name="task-status" label="Status" type="number" min="1" max="4" placeholder="What is the task status?" wrapperClass="mb-64" />
+            <Select v-model="taskForm.status" :options="statusOptions" name="task-status" label="Status" placeholder="What is the task status?" wrapperClass="mb-24" :value="taskForm.status" />
         </div>
         <div class="submit-bar">
             <button class="submit-bar__button bg-accent px-4 font-roboto text-white accent-shadow accent-shadow-focus" @click="submitTask">Submit</button>
@@ -46,6 +46,7 @@ export default class TaskModal extends Vue {
     };
     modalName: string = "taskModal";
     categoryOptions: string[] = ["Święta", "Urlop", "Muzyka", "Programowanie"];
+    statusOptions: number[] = [1, 2, 3, 4];
 
     @task.Action
     ADD_NEW_TASK!: ({ name, category, description }: Task) => void;

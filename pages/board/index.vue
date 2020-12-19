@@ -78,7 +78,7 @@ export default class Board extends Vue {
 
     async mounted() {
         try {
-            if (!this.userData) {
+            if (!this.userData.username) {
                 await this.FETCH_USER_DATA();
                 this.userData = this.GET_USER_DATA;
             }
