@@ -17,7 +17,6 @@ export default class Api extends VuexModule {
     @Action({ rawError: true })
     public async ADD_NEW_TASK({ name, category, description, status }: Task) {
         try {
-            console.log({ name, category, description, status });
             const cookieId = JSON.parse(Cookies.get("logged-user-id"));
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `

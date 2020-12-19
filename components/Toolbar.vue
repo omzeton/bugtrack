@@ -4,7 +4,7 @@
             <img src="~/assets/logo.svg" alt="Logo" />
         </nuxt-link>
         <div class="todo">
-            <p class="text-accent font-roboto"></p>
+            <p class="text-accent font-roboto">1. Categories select 2. Auto update board</p>
         </div>
         <nav class="toolbar__nav">
             <nuxt-link to="/" tag="div" class="toolbar__button flex-wrapper">Home</nuxt-link>

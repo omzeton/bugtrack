@@ -1,4 +1,4 @@
-import { User, LogInResult } from "../models/models";
+import { User, LogInResult } from "@/models";
 import { getDB } from "../api/mongo";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcryptjs";

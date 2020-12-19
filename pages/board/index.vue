@@ -8,7 +8,7 @@
             <h2 class="splash__header font-roboto">
                 Board
             </h2>
-            <div class="task-board__tools mt-8">
+            <div class="task-board__tools mt-4">
                 <button class="task-board__add box-border pl-4 pr-6 bg-black2" @click="openTaskModal">
                     <svg
                         xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -50,10 +50,10 @@ import Vue from "vue";
 import Component from "~/plugins/nuxt-class-component";
 import Columns from "@/components/Board/Columns.vue";
 import { namespace } from "nuxt-property-decorator";
-import { User } from "~/models/models";
+import { User } from "@/models";
 
-const api = namespace("api");
 const modals = namespace("modals");
+const user = namespace("user");
 
 @Component({
     components: {
@@ -61,11 +61,11 @@ const modals = namespace("modals");
     },
 })
 export default class Board extends Vue {
-    @api.Action
+    @user.Action
     public FETCH_USER_DATA!: () => any;
     @modals.Action
     public SHOW_MODAL!: ({ modalName, modalData }: { modalName: string; modalData: any }) => void;
-    @api.Getter
+    @user.Getter
     public GET_USER_DATA!: any;
 
     public userData: any = null;
@@ -85,7 +85,7 @@ export default class Board extends Vue {
         try {
             if (context && context.req) {
                 // TODO: Maximum call stack erreicht
-                // const userData = await context.store.dispatch("api/FETCH_USER_DATA", { _id: context.req.headers.cookie });
+                // const userData = await context.store.dispatch("user/FETCH_USER_DATA", { _id: context.req.headers.cookie });
                 // return userData;
             }
         } catch (error) {

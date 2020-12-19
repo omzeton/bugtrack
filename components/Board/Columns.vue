@@ -17,7 +17,7 @@
 import { Vue, Component, namespace } from "nuxt-property-decorator";
 import ColumnCard from "./ColumnCard.vue";
 
-const api = namespace("api");
+const user = namespace("user");
 
 interface Task {
     category: number;
@@ -33,9 +33,9 @@ interface Column {
 
 @Component
 export default class Columns extends Vue {
-    @api.Action
+    @user.Action
     FETCH_USER_DATA!: () => any;
-    @api.Getter
+    @user.Getter
     GET_USER_DATA!: any;
 
     columns: Column[] = [
@@ -68,6 +68,9 @@ export default class Columns extends Vue {
     }
 
     taskPerStatus(taskStatus: number) {
+        if (!this.tasks) {
+            return [];
+        }
         const result = this.tasks.filter(el => el.status === taskStatus);
         return result;
     }
