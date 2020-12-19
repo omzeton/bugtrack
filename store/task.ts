@@ -1,5 +1,5 @@
 import { Module, VuexModule, Action, Mutation } from "vuex-module-decorators";
-import { Task } from "@/models";
+import { TaskToSend } from "@/models";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -9,9 +9,10 @@ import axios from "axios";
 })
 export default class Api extends VuexModule {
     @Action({ rawError: true })
-    public async ADD_NEW_TASK({ name, category, description, status }: Task) {
+    public async ADD_NEW_TASK({ name, category, description, status }: TaskToSend) {
         try {
             const cookieId = JSON.parse(Cookies.get("logged-user-id"));
+            console.log({ status: parseInt(status) });
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `
                     mutation addANewTask($_id:ID!, $name:String!, $category:String!, $description:String!, $status:Int!) {
@@ -29,15 +30,8 @@ export default class Api extends VuexModule {
                     name,
                     category,
                     description,
-                    status,
+                    status: parseInt(status),
                 },
-            });
-            console.log({
-                _id: res.data.data.addNewTask._id,
-                name,
-                category,
-                description,
-                status,
             });
             this.context.commit(
                 "user/pushNewTaskToArr",

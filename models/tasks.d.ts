@@ -1,9 +1,18 @@
 import { ObjectId } from "mongodb";
 
-export default interface Task {
-    _id: ObjectId;
+interface Task {
+    _id: ObjectId | null;
     name: string;
     category: string;
     description: string;
     status: number;
 }
+
+interface TaskToSend {
+    name: string;
+    category: string;
+    description: string;
+    status: string;
+}
+
+export { Task, TaskToSend };

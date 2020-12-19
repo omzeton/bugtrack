@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Vue, Component, namespace } from "nuxt-property-decorator";
-import { Task } from "@/models";
+import { Task, TaskToSend } from "@/models";
 import Input from "../Form/Input.vue";
 import Select from "../Form/Select.vue";
 import ModalBase from "./ModalBase.vue";
@@ -43,11 +43,11 @@ interface SelectOption {
     },
 })
 export default class TaskModal extends Vue {
-    taskForm: Task = {
+    taskForm: TaskToSend = {
         name: "",
         category: "",
         description: "",
-        status: 1,
+        status: "",
     };
     modalName: string = "taskModal";
     categoryOptions: SelectOption[] = [
@@ -88,7 +88,7 @@ export default class TaskModal extends Vue {
     ];
 
     @task.Action
-    ADD_NEW_TASK!: ({ name, category, description }: Task) => void;
+    ADD_NEW_TASK!: ({ name, category, description }: TaskToSend) => void;
     @modals.Action
     HIDE_MODAL!: ({ modalName }: { modalName: string }) => void;
 

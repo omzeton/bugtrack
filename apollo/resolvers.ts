@@ -79,7 +79,7 @@ export default {
                 throw e;
             }
         },
-        addNewTask: async (_root: undefined, { _id, name, category, description, status }: { _id: string; name: string; category: string; description: string; status: number }): Promise<Task> => {
+        addNewTask: async (_root: undefined, { _id, name, category, description, status }: { _id: string; name: string; category: string; description: string; status: string }): Promise<Task> => {
             try {
                 const db = getDB();
                 const userId = new ObjectId(_id);
@@ -93,7 +93,7 @@ export default {
                                 name,
                                 category,
                                 description,
-                                status,
+                                status: parseInt(status),
                             },
                         },
                     }
@@ -103,7 +103,7 @@ export default {
                     name,
                     category,
                     description,
-                    status,
+                    status: parseInt(status),
                 };
             } catch (e) {
                 throw e;

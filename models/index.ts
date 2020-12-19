@@ -1,5 +1,5 @@
 import User from "./users";
-import Task from "./tasks";
+import { Task, TaskToSend } from "./tasks";
 
 interface RegistrationForm {
     username: string;
@@ -24,4 +24,4 @@ interface LogInResult {
     token: string;
 }
 
-export { User, Task, HTMLForm, RegistrationForm, LoginForm, LogInResult };
+export { User, Task, TaskToSend, HTMLForm, RegistrationForm, LoginForm, LogInResult };
