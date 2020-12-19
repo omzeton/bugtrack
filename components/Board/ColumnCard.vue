@@ -4,7 +4,7 @@
             <h2 class="text-white font-roboto text-xl font-bold mb-2">{{ cardData.name }}</h2>
         </div>
         <div class="column-card__tag mt-2 mb-12">
-            <p class="column-card__tag-label px-4 text-sm text-white" :class="`column-card__tag-label${label(cardData.category)}`">{{ cardData.category }}</p>
+            <p class="column-card__tag-label px-4 text-sm text-white" :style="label(cardData.category)">{{ cardData.category }}</p>
         </div>
         <div class="column-card__description mb-6">
             <p class="text-nunito font-light text-white text-sm leading-6">{{ cardData.description }}</p>
@@ -18,28 +18,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator";
-import { Task, Column } from "~/models/models";
+import { Component, Prop, Vue, mixins } from "nuxt-property-decorator";
+import { Task } from "@/models";
+import LabelResolver from "@/mixins/LabelResolver";
 @Component
-export default class ColumnCard extends Vue {
+export default class ColumnCard extends mixins(LabelResolver) {
     @Prop() cardData!: Task;
-
-    label(labelString: string) {
-        switch (labelString) {
-            case "Pijaństwo":
-                return "--brown";
-                break;
-            case "Muzyka":
-                return "--blue";
-                break;
-            case "Urlop":
-                return "--green";
-                break;
-            default:
-                return "--default";
-                break;
-        }
-    }
 }
 </script>
 
@@ -51,7 +35,7 @@ export default class ColumnCard extends Vue {
     display: block;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid $formWhite;
+    border: 1px dashed $formWhite;
     cursor: pointer;
     &__tag {
         display: block;

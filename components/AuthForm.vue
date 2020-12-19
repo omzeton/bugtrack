@@ -107,9 +107,9 @@ import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { Vue, Component, Prop, namespace } from "nuxt-property-decorator";
 import Loader from "@/components/Loader.vue";
 import Button from "@/components/Button.vue";
-import { RegistrationForm, LoginForm, HTMLForm, User } from "../models/models";
+import { RegistrationForm, LoginForm, HTMLForm, User } from "@/models";
 
-const api = namespace("api");
+const auth = namespace("auth");
 const user = namespace("user");
 
 @Component({
@@ -124,10 +124,10 @@ export default class Auth extends Vue {
     @Prop({ default: false })
     readonly registrationForm!: boolean;
 
-    @api.Action
-    public REGISTER_USER!: (data: RegistrationForm) => any;
-    @api.Action
-    public LOGIN_USER!: (data: LoginForm) => any;
+    @auth.Action
+    public REGISTER_USER!: (data: RegistrationForm) => RegistrationForm;
+    @auth.Action
+    public LOGIN_USER!: (data: LoginForm) => LoginForm;
     @user.Mutation
     public updateUserInfo!: (data: User & { token: string }) => void;
 

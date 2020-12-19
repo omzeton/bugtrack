@@ -1,4 +1,4 @@
-import { User, LogInResult } from "../models/models";
+import { User, LogInResult, Task } from "@/models";
 import { getDB } from "../api/mongo";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcryptjs";
@@ -8,7 +8,7 @@ export default {
     Query: {
         users: async () => {
             const db = getDB();
-            const result: any = await db
+            const result: User[] = await db
                 .collection("users")
                 .find()
                 .toArray();
@@ -80,17 +80,11 @@ export default {
                 throw e;
             }
         },
-        addNewTask: async (_root: undefined, { _id, name, category, description, status }: { _id: string; name: string; category: string; description: string; status: number }): Promise<any> => {
+        addNewTask: async (_root: undefined, { _id, name, category, description, status }: { _id: string; name: string; category: string; description: string; status: number }): Promise<Task> => {
             try {
                 const db = getDB();
                 const userId = new ObjectId(_id);
-                console.log({
-                    name,
-                    category,
-                    description,
-                    status,
-                });
-                const result = await db.collection("users").updateOne(
+                await db.collection("users").updateOne(
                     { _id: userId },
                     {
                         $push: {
@@ -103,7 +97,12 @@ export default {
                         },
                     }
                 );
-                return result;
+                return {
+                    name,
+                    category,
+                    description,
+                    status,
+                };
             } catch (e) {
                 throw e;
             }

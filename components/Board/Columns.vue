@@ -5,8 +5,10 @@
                 <h2 class="font-nunito font-hairline text-white mb-4">
                     {{ column.name }} <span class="ml-1 font-roboto font-bold text-form">{{ taskPerStatus(column.statusId).length }}</span>
                 </h2>
-                <div class="columns__ticker-wrapper" v-if="tasks">
-                    <ColumnCard v-for="(task, index) in taskPerStatus(column.statusId)" :key="index" :cardData="task" />
+                <div class="columns__tickets-scroll-wrapper">
+                    <div class="columns__ticker-wrapper" v-if="tasks">
+                        <ColumnCard v-for="(task, index) in taskPerStatus(column.statusId)" :key="index" :cardData="task" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -16,15 +18,9 @@
 <script lang="ts">
 import { Vue, Component, namespace } from "nuxt-property-decorator";
 import ColumnCard from "./ColumnCard.vue";
+import { User, Task } from "@/models";
 
-const api = namespace("api");
-
-interface Task {
-    category: number;
-    description: string;
-    name: string;
-    status: number;
-}
+const user = namespace("user");
 
 interface Column {
     statusId: number;
@@ -33,10 +29,10 @@ interface Column {
 
 @Component
 export default class Columns extends Vue {
-    @api.Action
-    FETCH_USER_DATA!: () => any;
-    @api.Getter
-    GET_USER_DATA!: any;
+    @user.Action
+    FETCH_USER_DATA!: () => User;
+    @user.Getter
+    GET_USER_DATA!: User;
 
     columns: Column[] = [
         {
@@ -61,13 +57,16 @@ export default class Columns extends Vue {
     async mounted() {
         try {
             const userData = await this.FETCH_USER_DATA();
-            this.tasks = userData.data.data.userData.tasks;
+            this.tasks = userData.tasks;
         } catch (e) {
             throw e;
         }
     }
 
     taskPerStatus(taskStatus: number) {
+        if (!this.tasks) {
+            return [];
+        }
         const result = this.tasks.filter(el => el.status === taskStatus);
         return result;
     }
@@ -87,6 +86,14 @@ export default class Columns extends Vue {
         align-items: flex-start;
         justify-content: space-between;
     }
+    &__tickets-scroll-wrapper {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: calc(100vh - 480px);
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 }
 
 .column {
@@ -98,6 +105,8 @@ export default class Columns extends Vue {
     box-sizing: border-box;
     border: 1px solid $black3;
     &__ticker-wrapper {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;

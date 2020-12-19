@@ -1,9 +1,9 @@
 <template>
-    <div class="input py-2" :class="wrapperClass">
-        <label :for="name" class="font-nunito test-black2 pl-4 text-sm pb-1">
+    <div class="input py-2 bg-black3" :class="wrapperClass">
+        <label :for="name" class="font-nunito text-white mx-4 text-sm pb-1">
             {{ label }}
         </label>
-        <input v-model="innerModel" @input="emitValue($event)" :type="type" :name="name" :placeholder="placeholder" :min="min" :max="max" class="font-roboto pl-4" />
+        <input v-model="innerModel" @input="emitValue($event)" :type="type" :name="name" :placeholder="placeholder" :min="min" :max="max" class="font-roboto bg-black3 text-white pl-4" />
     </div>
 </template>
 
@@ -11,14 +11,14 @@
 import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
 @Component
 export default class Input extends Vue {
-    innerModel: any = "";
+    innerModel: string | number = "";
 
     @Prop(String) name!: string;
     @Prop(String) label!: string;
     @Prop(String) type!: string;
     @Prop(String) placeholder!: string;
     @Prop(String) wrapperClass!: string;
-    @Prop() value!: any;
+    @Prop() value!: string | number;
     @Prop() min!: number;
     @Prop() max!: number;
     @Watch("value")
@@ -37,14 +37,12 @@ export default class Input extends Vue {
 
 <style lang="scss" scoped>
 .input {
-    background-color: red;
     width: 100%;
     height: 50px;
     display: flex;
     flex-direction: column;
-    border: 1px solid $black2;
+    border: 1px solid $formWhite;
     border-radius: 6px;
-    background-color: $white1;
     input {
         outline: none;
     }

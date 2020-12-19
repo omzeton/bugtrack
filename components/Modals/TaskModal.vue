@@ -1,10 +1,18 @@
 <template>
     <ModalBase :modalName="modalName">
         <div class="task-form mt-32">
-            <Input v-model="taskForm.name" name="task-name" label="Name" type="text" placeholder="What is your task title?" wrapperClass="mb-12" :value="taskForm.name" />
-            <Input v-model="taskForm.category" name="task-category" label="Category" type="text" placeholder="What is the category of your task?" wrapperClass="mb-12" :value="taskForm.name" />
-            <Input v-model="taskForm.description" name="task-description" label="Description" type="text" placeholder="What is the task description?" wrapperClass="mb-12" :value="taskForm.name" />
-            <Input v-model="taskForm.status" name="task-status" label="Status" type="number" min="1" max="4" placeholder="What is the task status?" wrapperClass="mb-64" :value="taskForm.name" />
+            <Input v-model="taskForm.name" name="task-name" label="Name" type="text" placeholder="What is your task title?" wrapperClass="mb-12" />
+            <Select
+                v-model="taskForm.category"
+                :options="categoryOptions"
+                name="task-category"
+                label="Category"
+                placeholder="What is the category of your task?"
+                wrapperClass="mb-12"
+                :value="taskForm.category"
+            />
+            <Input v-model="taskForm.description" name="task-description" label="Description" type="text" placeholder="What is the task description?" wrapperClass="mb-12" />
+            <Select v-model="taskForm.status" :options="statusOptions" name="task-status" label="Status" placeholder="What is the task status?" wrapperClass="mb-24" :value="taskForm.status" />
         </div>
         <div class="submit-bar">
             <button class="submit-bar__button bg-accent px-4 font-roboto text-white accent-shadow accent-shadow-focus" @click="submitTask">Submit</button>
@@ -14,36 +22,73 @@
 
 <script lang="ts">
 import { Vue, Component, namespace } from "nuxt-property-decorator";
-import Input from "../Input.vue";
+import { Task } from "@/models";
+import Input from "../Form/Input.vue";
+import Select from "../Form/Select.vue";
 import ModalBase from "./ModalBase.vue";
 
 const task = namespace("task");
 const modals = namespace("modals");
 
-interface TaskForm {
+interface SelectOption {
+    value: string | number;
     name: string;
-    category: string;
-    description: string;
-    status: number;
 }
 
 @Component({
     components: {
         ModalBase,
         Input,
+        Select,
     },
 })
 export default class TaskModal extends Vue {
-    taskForm: TaskForm = {
+    taskForm: Task = {
         name: "",
         category: "",
         description: "",
         status: 1,
     };
     modalName: string = "taskModal";
+    categoryOptions: SelectOption[] = [
+        {
+            value: "Święta",
+            name: "Święta",
+        },
+        {
+            value: "Urlop",
+            name: "Urlop",
+        },
+        {
+            value: "Muzyka",
+            name: "Muzyka",
+        },
+        {
+            value: "Programowanie",
+            name: "Programowanie",
+        },
+    ];
+    statusOptions: SelectOption[] = [
+        {
+            value: 1,
+            name: "TO DO",
+        },
+        {
+            value: 2,
+            name: "IN PROGRESS",
+        },
+        {
+            value: 3,
+            name: "TESTING",
+        },
+        {
+            value: 4,
+            name: "DONE",
+        },
+    ];
 
     @task.Action
-    ADD_NEW_TASK!: ({ name, category, description }: TaskForm) => void;
+    ADD_NEW_TASK!: ({ name, category, description }: Task) => void;
     @modals.Action
     HIDE_MODAL!: ({ modalName }: { modalName: string }) => void;
 
