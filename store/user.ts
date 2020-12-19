@@ -20,7 +20,7 @@ export default class User extends VuexModule {
     get isLoggedIn(): boolean {
         return this.loggedIn;
     }
-    get GET_USER_DATA() {
+    get GET_USER_DATA(): models.User {
         return this.userInfo;
     }
 
@@ -30,9 +30,9 @@ export default class User extends VuexModule {
         this.context.commit("updateLoggedStatus", false);
     }
     @Action({ rawError: true })
-    public async FETCH_USER_DATA(_id: any) {
+    public async FETCH_USER_DATA(): Promise<models.User> {
         try {
-            const cookieId = _id ? _id._id : JSON.parse(Cookies.get("logged-user-id"));
+            const cookieId = JSON.parse(Cookies.get("logged-user-id"));
             const res = await axios.post("http://localhost:4000/graphql", {
                 query: `
                     query($_id:ID!) {
@@ -54,7 +54,7 @@ export default class User extends VuexModule {
                 },
             });
             this.context.commit("updateUserInfo", res.data.data.userData);
-            return res;
+            return res.data.data.userData;
         } catch (error) {
             throw error;
         }

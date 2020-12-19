@@ -54,13 +54,8 @@ export default class Modal extends Vue {
     public HIDE_MODAL!: ({ modalName }: { modalName: string }) => void;
 
     @modals.Getter
-    public GET_MODAL_DATA!: any;
-    @modals.Getter
     public GET_VISIBLE_MODAL!: string;
 
-    get modalData(): any {
-        return this.GET_MODAL_DATA;
-    }
     get visibleModal(): string {
         return this.GET_VISIBLE_MODAL;
     }

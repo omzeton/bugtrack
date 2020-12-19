@@ -62,13 +62,19 @@ const user = namespace("user");
 })
 export default class Board extends Vue {
     @user.Action
-    public FETCH_USER_DATA!: () => any;
+    public FETCH_USER_DATA!: () => User;
     @modals.Action
-    public SHOW_MODAL!: ({ modalName, modalData }: { modalName: string; modalData: any }) => void;
+    public SHOW_MODAL!: ({ modalName }: { modalName: string }) => void;
     @user.Getter
-    public GET_USER_DATA!: any;
+    public GET_USER_DATA!: User;
 
-    public userData: any = null;
+    public userData: User = {
+        _id: "",
+        email: "",
+        password: "",
+        username: "",
+        tasks: [],
+    };
 
     async mounted() {
         try {
@@ -96,7 +102,6 @@ export default class Board extends Vue {
     openTaskModal(): void {
         this.SHOW_MODAL({
             modalName: "taskModal",
-            modalData: "nothing",
         });
     }
 }

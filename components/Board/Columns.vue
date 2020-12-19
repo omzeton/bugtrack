@@ -16,15 +16,9 @@
 <script lang="ts">
 import { Vue, Component, namespace } from "nuxt-property-decorator";
 import ColumnCard from "./ColumnCard.vue";
+import { User, Task } from "@/models";
 
 const user = namespace("user");
-
-interface Task {
-    category: number;
-    description: string;
-    name: string;
-    status: number;
-}
 
 interface Column {
     statusId: number;
@@ -34,9 +28,9 @@ interface Column {
 @Component
 export default class Columns extends Vue {
     @user.Action
-    FETCH_USER_DATA!: () => any;
+    FETCH_USER_DATA!: () => User;
     @user.Getter
-    GET_USER_DATA!: any;
+    GET_USER_DATA!: User;
 
     columns: Column[] = [
         {
@@ -61,7 +55,7 @@ export default class Columns extends Vue {
     async mounted() {
         try {
             const userData = await this.FETCH_USER_DATA();
-            this.tasks = userData.data.data.userData.tasks;
+            this.tasks = userData.tasks;
         } catch (e) {
             throw e;
         }

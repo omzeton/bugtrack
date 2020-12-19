@@ -125,9 +125,9 @@ export default class Auth extends Vue {
     readonly registrationForm!: boolean;
 
     @auth.Action
-    public REGISTER_USER!: (data: RegistrationForm) => any;
+    public REGISTER_USER!: (data: RegistrationForm) => RegistrationForm;
     @auth.Action
-    public LOGIN_USER!: (data: LoginForm) => any;
+    public LOGIN_USER!: (data: LoginForm) => LoginForm;
     @user.Mutation
     public updateUserInfo!: (data: User & { token: string }) => void;
 

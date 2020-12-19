@@ -11,14 +11,14 @@
 import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
 @Component
 export default class Input extends Vue {
-    innerModel: any = "";
+    innerModel: string | number = "";
 
     @Prop(String) name!: string;
     @Prop(String) label!: string;
     @Prop(String) type!: string;
     @Prop(String) placeholder!: string;
     @Prop(String) wrapperClass!: string;
-    @Prop() value!: any;
+    @Prop() value!: string | number;
     @Prop() min!: number;
     @Prop() max!: number;
     @Watch("value")
