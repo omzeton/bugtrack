@@ -23,6 +23,9 @@ export default class User extends VuexModule {
     get GET_USER_DATA(): models.User {
         return this.userInfo;
     }
+    get GET_USER_TASKS(): models.Task[] {
+        return this.userInfo.tasks;
+    }
 
     @Action({ rawError: true })
     LOGOUT() {
@@ -41,6 +44,7 @@ export default class User extends VuexModule {
                             password
                             email
                             tasks {
+                                _id
                                 name
                                 category
                                 description
@@ -71,5 +75,6 @@ export default class User extends VuexModule {
     @Mutation
     pushNewTaskToArr(payload: models.Task) {
         this.userInfo.tasks.push(payload);
+        console.log(this.userInfo.tasks);
     }
 }

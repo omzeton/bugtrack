@@ -11,7 +11,7 @@
         </div>
         <div class="column-card__bottom-section px-4 box-border">
             <div class="column-card__code">
-                <p class="text-form font-nunito text-xs font-hairline">{{ cardData.status }}</p>
+                <p class="text-form font-nunito text-xs font-hairline">{{ cardData._id.slice(cardData._id.length - 5) }}</p>
             </div>
         </div>
     </div>

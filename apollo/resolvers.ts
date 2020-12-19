@@ -52,7 +52,6 @@ export default {
                 const idFromObject = new ObjectId(_id);
                 const user = await db.collection("users").findOne({ _id: idFromObject });
                 if (!user) throw new Error("User with this _id could not be found");
-
                 return user;
             } catch (e) {
                 throw e;
@@ -84,11 +83,13 @@ export default {
             try {
                 const db = getDB();
                 const userId = new ObjectId(_id);
+                const taskId = new ObjectId();
                 await db.collection("users").updateOne(
                     { _id: userId },
                     {
                         $push: {
                             tasks: {
+                                _id: taskId,
                                 name,
                                 category,
                                 description,
@@ -98,6 +99,7 @@ export default {
                     }
                 );
                 return {
+                    _id: taskId,
                     name,
                     category,
                     description,

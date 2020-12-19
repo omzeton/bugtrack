@@ -2,10 +2,11 @@ import { gql } from "apollo-server-express";
 
 export default gql`
     type Task {
+        _id: ID!
         name: String
         category: String
         description: String
-        status: Int
+        status: Int!
     }
 
     type User {
@@ -21,14 +22,6 @@ export default gql`
         token: String
     }
 
-    type TaskAndUserID {
-        _id: ID!
-        name: String
-        category: String
-        description: String
-        status: Int
-    }
-
     type Query {
         users: [User]
         logIn(username: String!, password: String!): LogInResult
@@ -37,6 +30,6 @@ export default gql`
 
     type Mutation {
         registerUser(username: String!, password: String!, email: String!): User
-        addNewTask(_id: ID!, name: String!, category: String, description: String, status: Int!): TaskAndUserID
+        addNewTask(_id: ID!, name: String!, category: String, description: String, status: Int!): Task
     }
 `;

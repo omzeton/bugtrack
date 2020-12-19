@@ -1,13 +1,7 @@
 import { Module, VuexModule, Action, Mutation } from "vuex-module-decorators";
+import { Task } from "@/models";
 import Cookies from "js-cookie";
 import axios from "axios";
-
-interface Task {
-    name: string;
-    category: string;
-    description: string;
-    status: string;
-}
 
 @Module({
     stateFactory: true,
@@ -22,6 +16,7 @@ export default class Api extends VuexModule {
                 query: `
                     mutation addANewTask($_id:ID!, $name:String!, $category:String!, $description:String!, $status:Int!) {
                         addNewTask(_id:$_id, name:$name, category:$category, description:$description, status:$status) {
+                            _id
                             name
                             category
                             description
@@ -34,16 +29,24 @@ export default class Api extends VuexModule {
                     name,
                     category,
                     description,
-                    status: parseInt(status),
+                    status,
                 },
+            });
+            console.log({
+                _id: res.data.data.addNewTask._id,
+                name,
+                category,
+                description,
+                status,
             });
             this.context.commit(
                 "user/pushNewTaskToArr",
                 {
+                    _id: res.data.data.addNewTask._id,
                     name,
                     category,
                     description,
-                    status: parseInt(status),
+                    status,
                 },
                 { root: true }
             );
