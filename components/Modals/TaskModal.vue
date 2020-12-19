@@ -30,6 +30,11 @@ import ModalBase from "./ModalBase.vue";
 const task = namespace("task");
 const modals = namespace("modals");
 
+interface SelectOption {
+    value: string | number;
+    name: string;
+}
+
 @Component({
     components: {
         ModalBase,
@@ -45,8 +50,42 @@ export default class TaskModal extends Vue {
         status: 1,
     };
     modalName: string = "taskModal";
-    categoryOptions: string[] = ["Święta", "Urlop", "Muzyka", "Programowanie"];
-    statusOptions: number[] = [1, 2, 3, 4];
+    categoryOptions: SelectOption[] = [
+        {
+            value: "Święta",
+            name: "Święta",
+        },
+        {
+            value: "Urlop",
+            name: "Urlop",
+        },
+        {
+            value: "Muzyka",
+            name: "Muzyka",
+        },
+        {
+            value: "Programowanie",
+            name: "Programowanie",
+        },
+    ];
+    statusOptions: SelectOption[] = [
+        {
+            value: 1,
+            name: "TO DO",
+        },
+        {
+            value: 2,
+            name: "IN PROGRESS",
+        },
+        {
+            value: 3,
+            name: "TESTING",
+        },
+        {
+            value: 4,
+            name: "DONE",
+        },
+    ];
 
     @task.Action
     ADD_NEW_TASK!: ({ name, category, description }: Task) => void;

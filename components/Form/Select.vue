@@ -5,7 +5,7 @@
         </label>
         <select class="font-roboto bg-black3 text-white mx-4" :name="name" v-model="innerModel" @input="emitValue($event)">
             <option disabled value="">{{ placeholder }}</option>
-            <option v-for="(option, index) in options" :key="index" :value="option">{{ option }}</option>
+            <option v-for="(option, index) in options" :key="index" :value="option.value">{{ option.name }}</option>
         </select>
     </div>
 </template>
