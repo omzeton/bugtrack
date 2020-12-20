@@ -1,4 +1,5 @@
 nodemon.json
+/pages/list
 /logs
 *.log
 npm-debug.log*
