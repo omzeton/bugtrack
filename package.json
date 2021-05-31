@@ -17,7 +17,7 @@
         "@nuxtjs/axios": "^5.12.2",
         "@types/express": "^4.17.9",
         "@types/mongodb": "^3.6.3",
-        "@types/node": "^14.14.12",
+        "@types/node": "^15.6.1",
         "apollo-datasource-rest": "^0.9.5",
         "apollo-server-express": "^2.19.0",
         "axios": "^0.21.0",
